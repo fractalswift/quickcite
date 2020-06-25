@@ -8,9 +8,6 @@ import {
 } from 'react-native';
 
 import ResultsDetail from './ResultsDetail';
-import { StackActions } from '@react-navigation/native';
-
-import ArticleScreen from '../screens/ArticleScreen';
 
 const ResultsList = ({ title, results, navigation, searchedTerm }) => {
   if (!results.length && !searchedTerm) {

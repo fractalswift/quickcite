@@ -16,7 +16,6 @@ export default () => {
           q: `keyword:${searchTerm}`,
         },
       });
-      console.log('response:', response.data.records);
       setArticles(response.data.records);
       setSearchedTerm(searchTerm);
     } catch (err) {

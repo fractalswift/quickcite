@@ -12,10 +12,6 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function ArticleScreen({ route, navigation }) {
-  console.log('==============');
-  console.log(route);
-  console.log(navigation);
-
   const title = route.params.title;
   const authors = route.params.authors;
   const pubDate = route.params.pubDate;

@@ -33,7 +33,9 @@ export default function SearchScreen({ navigation }) {
         term={term}
         onTermChange={setTerm}
       />
+
       {errorMessage ? <Text>{errorMessage} </Text> : null}
+
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
