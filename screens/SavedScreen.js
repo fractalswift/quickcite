@@ -3,14 +3,18 @@ import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 
-export default function LinksScreen() {
+export default function SavedScreen() {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <Text>Saved articles / Saved citations / Saved quotes / Saved notes</Text>
-    </ScrollView>
+    <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <View style={styles.welcomeContainer}>
+          <Text>Log in to see your saved articles and notes.</Text>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -20,10 +24,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   contentContainer: {
-    paddingTop: 15,
+    paddingTop: 30,
   },
   optionIconContainer: {
     marginRight: 12,
+  },
+  welcomeContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 20,
   },
   option: {
     backgroundColor: '#fdfdfd',

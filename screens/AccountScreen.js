@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function AccountScreen() {
   return (
     <View style={styles.container}>
       <ScrollView
@@ -27,7 +27,7 @@ export default function HomeScreen() {
   );
 }
 
-HomeScreen.navigationOptions = {
+AccountScreen.navigationOptions = {
   header: null,
 };
 
