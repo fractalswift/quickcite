@@ -8,6 +8,8 @@ import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 
+import ArticleScreen from './screens/ArticleScreen';
+
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -20,10 +22,11 @@ export default function App(props) {
       <View style={styles.container}>
         <NavigationContainer linking={LinkingConfiguration}>
           <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name='Root' component={BottomTabNavigator} />
+            <Stack.Screen name='Article' component={ArticleScreen} />
           </Stack.Navigator>
         </NavigationContainer>
-        <StatusBar style="auto" />
+        <StatusBar style='auto' />
       </View>
     );
   }

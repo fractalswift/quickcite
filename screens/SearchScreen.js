@@ -42,6 +42,7 @@ export default function SearchScreen({ navigation }) {
           searchedTerm={searchedTerm}
           results={articles}
           title='Article results:'
+          navigation={navigation}
         />
       </ScrollView>
     </View>

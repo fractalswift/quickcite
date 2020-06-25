@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
 import ResultsDetail from './ResultsDetail';
+import { StackActions } from '@react-navigation/native';
+
+import ArticleScreen from '../screens/ArticleScreen';
 
 const ResultsList = ({ title, results, navigation, searchedTerm }) => {
   if (!results.length && !searchedTerm) {
@@ -42,16 +42,7 @@ const ResultsList = ({ title, results, navigation, searchedTerm }) => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('home', {
-                  abstract: item.abstract,
-                  title: item.title,
-                  authors: item.creators,
-                  pubDate: item.publicationDate,
-                  pubName: item.publicationName,
-                  url: item.url[0].value,
-                })
-              }
+              onPress={() => navigation.navigate('Article', {})}
             >
               <ResultsDetail result={item} />
             </TouchableOpacity>

@@ -10,18 +10,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default function ArticleScreen() {
-  const [term, setTerm] = useState('');
-
-  const [
-    searchApi,
-    articles,
-    errorMessage,
-    searchedTerm,
-    filterOpenAccess,
-    setFilterOpenAccess,
-  ] = useArticles();
-
+export default function ArticleScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text> // Article Screen</Text>
