@@ -30,7 +30,9 @@ const ResultsList = ({ title, results, navigation, searchedTerm }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titleStyle}>{title}</Text>
+      <Text style={styles.titleStyle}>
+        {results.length} results for "{searchedTerm}":
+      </Text>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 15,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 15,
   },
   noResults: {
     marginTop: 10,

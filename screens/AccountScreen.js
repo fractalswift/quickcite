@@ -1,4 +1,3 @@
-import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import {
   Image,
@@ -10,7 +9,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import { MonoText } from '../components/StyledText';
+import SettingButton from '../components/SettingButton';
 
 export default function AccountScreen() {
   return (
@@ -20,7 +19,10 @@ export default function AccountScreen() {
         contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.welcomeContainer}>
-          <Text>Account log in and settings</Text>
+          <SettingButton buttonName='Log in' iconName='md-log-in' />
+          <SettingButton buttonName='Dark mode' iconName='md-moon' />
+          <SettingButton buttonName='Sync' iconName='md-sync' />
+          <SettingButton buttonName='Security' iconName='md-key' />
         </View>
       </ScrollView>
     </View>
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    margin: 10,
   },
   developmentModeText: {
     marginBottom: 20,
