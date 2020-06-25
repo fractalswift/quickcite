@@ -42,7 +42,16 @@ const ResultsList = ({ title, results, navigation, searchedTerm }) => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Article', {})}
+              onPress={() =>
+                navigation.navigate('Article', {
+                  abstract: item.abstract,
+                  title: item.title,
+                  authors: item.creators,
+                  pubDate: item.publicationDate,
+                  pubName: item.publicationName,
+                  url: item.url[0].value,
+                })
+              }
             >
               <ResultsDetail result={item} />
             </TouchableOpacity>

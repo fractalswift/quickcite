@@ -10,14 +10,40 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default function ArticleScreen({ navigation }) {
+export default function ArticleScreen({ route, navigation }) {
+  console.log('==============');
+  console.log(route);
+  console.log(navigation);
+
+  const title = route.params.title;
+  const authors = route.params.authors;
+  const pubDate = route.params.pubDate;
+  const pubName = route.params.pubName;
+  const abstract = route.params.abstract;
+  const url = route.params.url;
+
   return (
     <View style={styles.container}>
-      <Text> // Article Screen</Text>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
-      ></ScrollView>
+      >
+        <Text style={styles.articleTitle}>{title}</Text>
+        <Text style={styles.journalName}>{pubName}</Text>
+        <Text style={styles.journalName}>{pubDate}</Text>
+
+        <View style={styles.authors}>
+          <Text>Authors:</Text>
+          {authors.map((obj) => {
+            return <Text key={obj.creator}>{obj.creator}</Text>;
+          })}
+        </View>
+        <Text style={styles.articleTitle}>ABSTRACT</Text>
+        <Text style={styles.abstract}>{abstract}</Text>
+        <Text style={styles.readMore} onPress={() => Linking.openURL(url)}>
+          Go to full article
+        </Text>
+      </ScrollView>
     </View>
   );
 }
@@ -148,4 +174,45 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
+  articleTitle: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 5,
+    fontSize: 18,
+  },
+  journal: {
+    width: 250,
+    height: 'auto',
+    borderRadius: 4,
+    marginBottom: 5,
+    borderWidth: 1,
+    borderColor: 'black',
+    color: 'black',
+    padding: 5,
+    display: 'flex',
+  },
+  journalName: {
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginBottom: 5,
+  },
+  articleDate: {
+    textAlign: 'center',
+    marginBottom: 5,
+    fontStyle: 'italic',
+  },
+  abstract: {
+    textAlign: 'left',
+    marginBottom: 5,
+  },
+  readMore: {
+    color: 'blue',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 45,
+    marginTop: 20,
+  },
+  authors: { marginBottom: 10, textAlign: 'center' },
 });
