@@ -14,6 +14,14 @@ const ResultsList = ({ title, results, navigation, searchedTerm }) => {
     return (
       <View style={styles.container}>
         <Text style={styles.noResults}>Please enter a search term.</Text>
+
+        <Text style={styles.landingMessage}>
+          Search over 460,000 open access journals from Springer Nature.
+        </Text>
+
+        <Text style={styles.landingMessage}>
+          Read anywhere, save your reading history and quickly export citations.
+        </Text>
       </View>
     );
   }
@@ -75,6 +83,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'center',
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  landingMessage: {
+    marginTop: 20,
+    textAlign: 'center',
+    fontSize: 16,
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 

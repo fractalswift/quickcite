@@ -23,6 +23,7 @@ export default function AccountScreen() {
           <SettingButton buttonName='Dark mode' iconName='md-moon' />
           <SettingButton buttonName='Sync' iconName='md-sync' />
           <SettingButton buttonName='Security' iconName='md-key' />
+          <SettingButton buttonName='Text size' iconName='md-resize' />
         </View>
       </ScrollView>
     </View>
