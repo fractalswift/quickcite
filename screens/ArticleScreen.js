@@ -89,8 +89,8 @@ function handleHelpPress() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    marginLeft: 15,
+    marginRight: 15,
   },
   developmentModeText: {
     marginBottom: 20,
