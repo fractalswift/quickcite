@@ -2,9 +2,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import AccountScreen from '../screens/AccountScreen';
+import SavedScreen from '../screens/SavedScreen';
 import SearchScreen from '../screens/SearchScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Search';
@@ -18,32 +19,43 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name='Home'
-        component={HomeScreen}
-        options={{
-          title: 'Get Started',
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name='md-code-working' />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name='Links'
-        component={LinksScreen}
-        options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name='md-book' />
-          ),
-        }}
-      />
-      <BottomTab.Screen
         name='Search'
         component={SearchScreen}
         options={{
           title: 'Search',
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name='md-search' />
+          ),
+        }}
+      />
+
+      <BottomTab.Screen
+        name='Saved'
+        component={SavedScreen}
+        options={{
+          title: 'Saved',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name='md-save' />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name='History'
+        component={HistoryScreen}
+        options={{
+          title: 'History',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name='md-time' />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name='Account'
+        component={AccountScreen}
+        options={{
+          title: 'Account',
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name='md-settings' />
           ),
         }}
       />
@@ -56,13 +68,15 @@ function getHeaderTitle(route) {
     route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
   switch (routeName) {
-    case 'Home':
-      return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
+    case 'Account':
+      return 'Account settings & info';
+    case 'Saved':
+      return 'Saved articles and citations';
     case 'Search':
       return 'Search articles';
     case 'Article':
       return 'Read article';
+    case 'History':
+      return 'Reading history';
   }
 }

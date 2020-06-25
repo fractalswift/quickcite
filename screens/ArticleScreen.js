@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -90,7 +91,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     marginLeft: 15,
-    marginRight: 15,
+    paddingRight: 15,
   },
   developmentModeText: {
     marginBottom: 20,
