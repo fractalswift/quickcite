@@ -62,5 +62,7 @@ function getHeaderTitle(route) {
       return 'Links to learn more';
     case 'Search':
       return 'Search articles';
+    case 'Article':
+      return 'Read article';
   }
 }

@@ -10,11 +10,7 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import SearchBar from '../components/SearchBar';
-import useArticles from '../hooks/useArticles';
-import ResultsList from '../components/ResultsList';
-
-export default function SearchScreen({ navigation }) {
+export default function ArticleScreen() {
   const [term, setTerm] = useState('');
 
   const [
@@ -28,27 +24,16 @@ export default function SearchScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <SearchBar
-        onTermSubmit={() => searchApi(term)}
-        term={term}
-        onTermChange={setTerm}
-      />
-      {errorMessage ? <Text>{errorMessage} </Text> : null}
+      <Text> // Article Screen</Text>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
-      >
-        <ResultsList
-          searchedTerm={searchedTerm}
-          results={articles}
-          title='Article results:'
-        />
-      </ScrollView>
+      ></ScrollView>
     </View>
   );
 }
 
-SearchScreen.navigationOptions = {
+ArticleScreen.navigationOptions = {
   header: null,
 };
 
