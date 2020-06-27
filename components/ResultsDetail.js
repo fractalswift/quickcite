@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const ResultsDetail = ({ result }) => {
+const ResultsDetail = ({ result, identifier }) => {
   // Skip the wierdly formatted results with if statement
   // TODO build in handling for weirdly formatted results
+
   if (typeof result.title === 'string') {
     const abstract = result.abstract.slice(0, 300);
 

@@ -45,7 +45,7 @@ const ResultsList = ({ title, results, navigation, searchedTerm }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={results}
-        keyExtractor={(result) => result.id}
+        keyExtractor={(result) => result.identifier}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
@@ -60,7 +60,7 @@ const ResultsList = ({ title, results, navigation, searchedTerm }) => {
                 })
               }
             >
-              <ResultsDetail result={item} />
+              <ResultsDetail result={item} identifier={item.identifier} />
             </TouchableOpacity>
           );
         }}

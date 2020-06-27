@@ -9,6 +9,7 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 
 import ArticleScreen from './screens/ArticleScreen';
+import firebase from 'firebase';
 
 const Stack = createStackNavigator();
 
