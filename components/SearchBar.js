@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const SearchBar = ({ term, onTermChange, onTermSubmit }) => {
@@ -37,11 +37,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 10,
     flex: 1,
-  },
-  iconStyle: {
-    fontSize: 35,
-    alignSelf: 'center',
-    marginHorizontal: 15,
   },
 });
 
