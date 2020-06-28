@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 const FloatingButton = ({ name, color, icon }) => {
   return (
     <View>
-      <TouchableOpacity style={buttonStyle(color)}>
+      <TouchableOpacity style={floatingButtonStyle(color)}>
         <Ionicons
           name={icon}
           size={30}
@@ -20,7 +20,7 @@ const FloatingButton = ({ name, color, icon }) => {
 
 // not using stylesheet as want to change bgcolor as prop
 
-buttonStyle = function (myColor) {
+floatingButtonStyle = function (myColor) {
   return {
     backgroundColor: myColor,
     height: 55,

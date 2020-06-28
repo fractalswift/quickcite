@@ -1,38 +1,39 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const SettingButton = ({ iconName, buttonName, onPress }) => {
+const SettingButton = ({ name, color, icon, onPress }) => {
   return (
-    <TouchableOpacity style={styles.settingButton} onPress={onPress}>
-      <Ionicons name={iconName} size={40} color={'grey'} />
-      <Text style={styles.settingText}>{buttonName}</Text>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity style={buttonStyle(color)} onPress={onPress}>
+        <Ionicons
+          name={icon}
+          size={30}
+          style={{ marginBottom: -3 }}
+          color='black'
+        />
+        <Text style={{ marginLeft: 20, fontSize: 18 }}>{name}</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  settingButton: {
-    borderBottomWidth: 0,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    elevation: 1,
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 10,
-    height: 60,
-    width: '80%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+// not using stylesheet as want to change bgcolor as prop
+
+buttonStyle = function (myColor) {
+  return {
+    backgroundColor: myColor,
+    height: 55,
+    width: 270,
+    marginTop: 20,
     alignItems: 'center',
-    paddingLeft: 10,
-    marginBottom: 20,
-  },
-  settingText: {
-    fontSize: 30,
+    justifyContent: 'flex-start',
+    borderRadius: 10,
+    elevation: 15,
     marginLeft: 10,
-    color: 'grey',
-  },
-});
+    flexDirection: 'row',
+    padding: 10,
+  };
+};
+
 export default SettingButton;

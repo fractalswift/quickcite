@@ -24,6 +24,7 @@ export default function AccountScreen() {
   });
 
   const signOut = () => {
+    console.log('signing out');
     firebase.auth().signOut();
   };
 
@@ -37,14 +38,19 @@ export default function AccountScreen() {
           >
             <View style={styles.welcomeContainer}>
               <SettingButton
-                buttonName='Sign out'
-                iconName='md-log-out'
+                name='Sign out'
+                icon='md-log-out'
                 onPress={signOut}
+                color='skyblue'
               />
-              <SettingButton buttonName='Dark mode' iconName='md-moon' />
-              <SettingButton buttonName='Sync' iconName='md-sync' />
-              <SettingButton buttonName='Security' iconName='md-key' />
-              <SettingButton buttonName='Text size' iconName='md-resize' />
+              <SettingButton name='Dark mode' icon='md-moon' color='skyblue' />
+              <SettingButton name='Sync' icon='md-sync' color='skyblue' />
+              <SettingButton name='Security' icon='md-key' color='skyblue' />
+              <SettingButton
+                name='Text size'
+                icon='md-resize'
+                color='skyblue'
+              />
             </View>
           </ScrollView>
         ) : (
