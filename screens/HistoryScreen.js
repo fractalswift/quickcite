@@ -1,25 +1,16 @@
 import firebase from 'firebase';
+import checkAuth from '../hooks/checkAuth';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import NotLoggedIn from '../components/NotLoggedIn';
 
 export default function HistoryScreen() {
-  const [isSignedIn, setSignedIn] = useState(false);
+  const [getUserStatus, isSignedIn] = checkAuth();
 
-  firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      // User is signed in.
-      console.log('user is signed in');
-      console.log(user);
-
-      setSignedIn(true);
-    } else {
-      // No user is signed in.
-      console.log('no user is signed in');
-      setSignedIn(false);
-    }
+  useEffect(() => {
+    getUserStatus();
   });
 
   console.log('signed in? :', isSignedIn);

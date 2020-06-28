@@ -1,18 +1,28 @@
-import { Ionicons } from '@expo/vector-icons';
-import * as React from 'react';
+import firebase from 'firebase';
+import checkAuth from '../hooks/checkAuth';
+
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
+import NotLoggedIn from '../components/NotLoggedIn';
 
 export default function SavedScreen() {
+  const [getUserStatus, isSignedIn] = checkAuth();
+
+  useEffect(() => {
+    getUserStatus();
+  });
+
+  console.log('signed in? :', isSignedIn);
+
   return (
     <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.welcomeContainer}>
-          <Text>Log in to see your saved articles and notes.</Text>
-        </View>
+      <ScrollView>
+        {isSignedIn ? (
+          <Text> Your saved articles here </Text>
+        ) : (
+          <NotLoggedIn screenTitle='saved articles and citations' />
+        )}
       </ScrollView>
     </View>
   );
