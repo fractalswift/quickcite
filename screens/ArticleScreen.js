@@ -10,6 +10,7 @@ import {
   Linking,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import FloatingButton from '../components/FloatingButton';
 
 export default function ArticleScreen({ route, navigation }) {
   const title = route.params.title;
@@ -21,6 +22,12 @@ export default function ArticleScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.topButtons}>
+        <FloatingButton color='skyblue' name='save' icon='md-save' />
+        <FloatingButton color='violet' name='cite' icon='md-quote' />
+        <FloatingButton color='palegoldenrod' name='web' icon='md-code' />
+      </View>
+
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
@@ -88,6 +95,11 @@ const styles = StyleSheet.create({
   container: {
     marginLeft: 15,
     paddingRight: 15,
+  },
+
+  topButtons: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
   developmentModeText: {
     marginBottom: 20,

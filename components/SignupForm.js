@@ -41,7 +41,6 @@ const SignupForm = () => {
         alignItems: 'center',
       }}
     >
-      <Text>LOGIN</Text>
       <FormInput
         label='Email'
         value={email}
@@ -57,7 +56,7 @@ const SignupForm = () => {
         secureTextEntry
       />
       <FormInput
-        label='Password2'
+        label='Confirm password'
         value={password2}
         onChangeText={setPassword2}
         placeholder={'Confirm password...'}

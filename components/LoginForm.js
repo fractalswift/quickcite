@@ -36,7 +36,6 @@ const LoginForm = () => {
         alignItems: 'center',
       }}
     >
-      <Text>LOGIN</Text>
       <FormInput
         label='Email'
         value={email}

@@ -9,10 +9,12 @@ const NotLoggedIn = ({ screenTitle }) => {
   if (isSignUp) {
     return (
       <View>
-        <Text>Please log in to see your {screenTitle}</Text>
+        <Text style={styles.notice}>
+          Please log in to see your {screenTitle}.
+        </Text>
         <SignupForm />
         <Text style={styles.switch}>Already have an account?</Text>
-        <Text style={styles.switch} onPress={() => setIsSignUp(false)}>
+        <Text style={styles.signUp} onPress={() => setIsSignUp(false)}>
           Sign In
         </Text>
       </View>
@@ -20,10 +22,12 @@ const NotLoggedIn = ({ screenTitle }) => {
   } else {
     return (
       <View>
-        <Text>Please log in to see your {screenTitle}</Text>
+        <Text style={styles.notice}>
+          Please sign in to see your {screenTitle}
+        </Text>
         <LoginForm />
         <Text style={styles.switch}>Don't have an account?</Text>
-        <Text style={styles.switch} onPress={setIsSignUp}>
+        <Text style={styles.signUp} onPress={setIsSignUp}>
           Sign Up
         </Text>
       </View>
@@ -35,6 +39,27 @@ const styles = StyleSheet.create({
   switch: {
     fontSize: 20,
     marginTop: 20,
+    textAlign: 'center',
+    marginTop: 40,
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  notice: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 20,
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  signUp: {
+    fontSize: 24,
+    marginTop: 10,
+    textAlign: 'center',
+    marginTop: 20,
+    marginLeft: 40,
+    marginRight: 40,
+    textDecorationLine: 'underline',
+    color: 'blue',
   },
 });
 
