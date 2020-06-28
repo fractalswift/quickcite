@@ -12,6 +12,8 @@ import LinkingConfiguration from './navigation/LinkingConfiguration';
 import ArticleScreen from './screens/ArticleScreen';
 import { firebaseConfig } from './env/firebaseConfig';
 
+import Header from './components/Header';
+
 const Stack = createStackNavigator();
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);

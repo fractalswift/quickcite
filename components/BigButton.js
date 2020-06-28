@@ -1,33 +1,40 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Text, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-const BigButton = ({ label, onPress }) => {
+const SettingButton = ({ label, color, icon, onPress }) => {
   return (
-    <>
-      <TouchableOpacity style={styles.bigButton} onPress={onPress}>
-        <Text style={styles.buttonText}>{label}</Text>
+    <View>
+      <TouchableOpacity style={buttonStyle(color)} onPress={onPress}>
+        <Ionicons
+          name={icon}
+          size={40}
+          style={{ marginBottom: -3 }}
+          color='whitesmoke'
+        />
+        <Text style={{ marginLeft: 20, fontSize: 28, color: 'whitesmoke' }}>
+          {label}
+        </Text>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
 
-export default BigButton;
+// not using stylesheet as want to change bgcolor as prop
 
-const styles = StyleSheet.create({
-  bigButton: {
-    borderWidth: 1,
-    borderColor: 'green',
-    width: 300,
-    borderRadius: 4,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+buttonStyle = function (myColor) {
+  return {
+    backgroundColor: myColor,
+    height: 55,
+    width: 290,
     marginTop: 20,
-    height: 40,
-  },
-  buttonText: {
-    fontSize: 24,
-    color: 'green',
-  },
-});
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    borderRadius: 10,
+    elevation: 15,
+    marginLeft: 10,
+    flexDirection: 'row',
+  };
+};
+
+export default SettingButton;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import Colors from '../constants/Colors';
 
 const ResultsDetail = ({ result, identifier }) => {
   // Skip the wierdly formatted results with if statement
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   readMore: {
-    color: 'blue',
+    color: Colors.tintColor,
     textAlign: 'right',
     textDecorationLine: 'underline',
     fontSize: 16,

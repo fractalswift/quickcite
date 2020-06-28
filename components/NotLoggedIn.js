@@ -9,9 +9,7 @@ const NotLoggedIn = ({ screenTitle }) => {
   if (isSignUp) {
     return (
       <View>
-        <Text style={styles.notice}>
-          Please log in to see your {screenTitle}.
-        </Text>
+        <Text style={styles.notice}>Please sign up to use {screenTitle}.</Text>
         <SignupForm />
         <Text style={styles.switch}>Already have an account?</Text>
         <Text style={styles.signUp} onPress={() => setIsSignUp(false)}>
@@ -23,7 +21,7 @@ const NotLoggedIn = ({ screenTitle }) => {
     return (
       <View>
         <Text style={styles.notice}>
-          Please sign in to see your {screenTitle}
+          Please sign in to see your {screenTitle}.
         </Text>
         <LoginForm />
         <Text style={styles.switch}>Don't have an account?</Text>
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     textDecorationLine: 'underline',
-    color: 'blue',
+    color: '#2f95dc',
   },
 });
 

@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import FloatingButton from '../components/FloatingButton';
+import Colors from '../constants/Colors';
+import Header from '../components/Header';
 
 export default function ArticleScreen({ route, navigation }) {
   const title = route.params.title;
@@ -22,6 +24,7 @@ export default function ArticleScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <Header />
       <View style={styles.topButtons}>
         <FloatingButton color='skyblue' name='save' icon='md-save' />
         <FloatingButton color='violet' name='cite' icon='md-quote' />
@@ -29,7 +32,7 @@ export default function ArticleScreen({ route, navigation }) {
       </View>
 
       <ScrollView
-        style={styles.container}
+        style={styles.articleContainer}
         contentContainerStyle={styles.contentContainer}
       >
         <Text style={styles.articleTitle}>{title}</Text>
@@ -93,13 +96,19 @@ function handleHelpPress() {
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: 15,
-    paddingRight: 15,
+    flex: 1,
+    backgroundColor: '#fafafa',
+  },
+  articleContainer: {
+    marginLeft: 20,
+    marginRight: 20,
   },
 
   topButtons: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    marginBottom: 20,
+    backgroundColor: 'transparent',
   },
   developmentModeText: {
     marginBottom: 20,
@@ -215,12 +224,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   readMore: {
-    color: 'blue',
+    color: Colors.tintColor,
     textAlign: 'center',
     textDecorationLine: 'underline',
     fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 45,
+    marginBottom: 105,
     marginTop: 20,
   },
   authors: { marginBottom: 10, textAlign: 'center' },

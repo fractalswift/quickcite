@@ -6,6 +6,7 @@ import AccountScreen from '../screens/AccountScreen';
 import SavedScreen from '../screens/SavedScreen';
 import SearchScreen from '../screens/SearchScreen';
 import HistoryScreen from '../screens/HistoryScreen';
+import Header from '../components/Header';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Search';
@@ -17,49 +18,53 @@ export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
-      <BottomTab.Screen
-        name='Search'
-        component={SearchScreen}
-        options={{
-          title: 'Search',
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name='md-search' />
-          ),
-        }}
-      />
+    <>
+      <Header />
 
-      <BottomTab.Screen
-        name='Saved'
-        component={SavedScreen}
-        options={{
-          title: 'Saved',
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name='md-save' />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name='History'
-        component={HistoryScreen}
-        options={{
-          title: 'History',
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name='md-time' />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name='Account'
-        component={AccountScreen}
-        options={{
-          title: 'Account',
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name='md-settings' />
-          ),
-        }}
-      />
-    </BottomTab.Navigator>
+      <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+        <BottomTab.Screen
+          name='Search'
+          component={SearchScreen}
+          options={{
+            title: 'Search',
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon focused={focused} name='md-search' />
+            ),
+          }}
+        />
+
+        <BottomTab.Screen
+          name='Saved'
+          component={SavedScreen}
+          options={{
+            title: 'Saved',
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon focused={focused} name='md-save' />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name='History'
+          component={HistoryScreen}
+          options={{
+            title: 'History',
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon focused={focused} name='md-time' />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name='Account'
+          component={AccountScreen}
+          options={{
+            title: 'Account',
+            tabBarIcon: ({ focused }) => (
+              <TabBarIcon focused={focused} name='md-settings' />
+            ),
+          }}
+        />
+      </BottomTab.Navigator>
+    </>
   );
 }
 

@@ -52,7 +52,12 @@ const LoginForm = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <BigButton label='Sign in' onPress={handleSignIn} />
+        <BigButton
+          color='#2f95dc'
+          icon='md-log-in'
+          label='Sign In'
+          onPress={handleSignIn}
+        />
       )}
       {errorMessage ? <Alert errorMessage={errorMessage} /> : null}
     </View>
