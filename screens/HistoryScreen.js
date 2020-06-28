@@ -1,17 +1,25 @@
+import firebase from 'firebase';
+
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import NotLoggedIn from '../components/NotLoggedIn';
 
 export default function HistoryScreen() {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in.
+      console.log('user is signed in');
+    } else {
+      // No user is signed in.
+      console.log('no user is signed in');
+    }
+  });
+
   return (
     <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.welcomeContainer}>
-          <Text>Log in to see your history</Text>
-        </View>
+      <ScrollView>
+        <NotLoggedIn screenTitle='history' />
       </ScrollView>
     </View>
   );
