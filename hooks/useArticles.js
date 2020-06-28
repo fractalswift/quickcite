@@ -7,8 +7,10 @@ export default () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [searchedTerm, setSearchedTerm] = useState('');
   const [filterOpenAccess, setFilterOpenAccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const searchApi = async (searchTerm) => {
+    setLoading(true);
     try {
       const response = await springer.get('/metadata/json', {
         params: {
@@ -16,10 +18,13 @@ export default () => {
           q: `keyword:${searchTerm}`,
         },
       });
+
       setArticles(response.data.records);
       setSearchedTerm(searchTerm);
+      setLoading(false);
     } catch (err) {
       setErrorMessage('Something went wrong');
+      setLoading(false);
     }
   };
 
@@ -30,5 +35,6 @@ export default () => {
     searchedTerm,
     filterOpenAccess,
     setFilterOpenAccess,
+    loading,
   ];
 };

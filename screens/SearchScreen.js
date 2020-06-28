@@ -13,6 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import SearchBar from '../components/SearchBar';
 import useArticles from '../hooks/useArticles';
 import ResultsList from '../components/ResultsList';
+import Spinner from '../components/Spinner';
 
 export default function SearchScreen({ navigation }) {
   const [term, setTerm] = useState('');
@@ -24,6 +25,7 @@ export default function SearchScreen({ navigation }) {
     searchedTerm,
     filterOpenAccess,
     setFilterOpenAccess,
+    loading,
   ] = useArticles();
 
   return (
@@ -40,12 +42,16 @@ export default function SearchScreen({ navigation }) {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
-        <ResultsList
-          searchedTerm={searchedTerm}
-          results={articles}
-          title='Article results:'
-          navigation={navigation}
-        />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <ResultsList
+            searchedTerm={searchedTerm}
+            results={articles}
+            title='Article results:'
+            navigation={navigation}
+          />
+        )}
       </ScrollView>
     </View>
   );

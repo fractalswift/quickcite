@@ -4,25 +4,27 @@ import { View, Text } from 'react-native';
 import FormInput from './FormInput';
 import BigButton from './BigButton';
 import Alert from './Alert';
+import Spinner from './Spinner';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSignIn = async () => {
     console.log('handle called');
+    setLoading(true);
     try {
       console.log('signing in!');
       let response = await firebase
         .auth()
         .signInWithEmailAndPassword(email.toString().trim(), password);
       console.log(response);
+      setLoading(false);
     } catch (error) {
       setErrorMessage('SignIn failed - check credentials.');
-      console.log(error);
-      console.log('email:', email);
-      console.log('password:', password);
+      setLoading(false);
     }
   };
 
@@ -48,7 +50,11 @@ const LoginForm = () => {
         placeholder={'password...'}
         secureTextEntry
       />
-      <BigButton label='Sign in' onPress={handleSignIn} />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <BigButton label='Sign in' onPress={handleSignIn} />
+      )}
       {errorMessage ? <Alert errorMessage={errorMessage} /> : null}
     </View>
   );
