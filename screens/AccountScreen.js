@@ -1,6 +1,8 @@
-import * as React from 'react';
+import firebase from 'firebase';
+
+import React, { useEffect } from 'react';
+
 import {
-  Image,
   Platform,
   StyleSheet,
   Text,
@@ -11,20 +13,43 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import SettingButton from '../components/SettingButton';
 
+import checkAuth from '../hooks/checkAuth';
+import NotLoggedIn from '../components/NotLoggedIn';
+
 export default function AccountScreen() {
+  const [getUserStatus, isSignedIn] = checkAuth();
+
+  useEffect(() => {
+    getUserStatus();
+  });
+
+  const signOut = () => {
+    firebase.auth().signOut();
+  };
+
   return (
     <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.welcomeContainer}>
-          <SettingButton buttonName='Log in' iconName='md-log-in' />
-          <SettingButton buttonName='Dark mode' iconName='md-moon' />
-          <SettingButton buttonName='Sync' iconName='md-sync' />
-          <SettingButton buttonName='Security' iconName='md-key' />
-          <SettingButton buttonName='Text size' iconName='md-resize' />
-        </View>
+      <ScrollView>
+        {isSignedIn ? (
+          <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.contentContainer}
+          >
+            <View style={styles.welcomeContainer}>
+              <SettingButton
+                buttonName='Sign out'
+                iconName='md-log-out'
+                onPress={signOut}
+              />
+              <SettingButton buttonName='Dark mode' iconName='md-moon' />
+              <SettingButton buttonName='Sync' iconName='md-sync' />
+              <SettingButton buttonName='Security' iconName='md-key' />
+              <SettingButton buttonName='Text size' iconName='md-resize' />
+            </View>
+          </ScrollView>
+        ) : (
+          <NotLoggedIn screenTitle='account settings' />
+        )}
       </ScrollView>
     </View>
   );
@@ -72,89 +97,33 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    margin: 10,
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
+    backgroundColor: '#fafafa',
   },
   contentContainer: {
     paddingTop: 30,
+  },
+  optionIconContainer: {
+    marginRight: 12,
   },
   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
   },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
+  option: {
+    backgroundColor: '#fdfdfd',
+    paddingHorizontal: 15,
     paddingVertical: 15,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 0,
+    borderColor: '#ededed',
   },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
+  lastOption: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  optionText: {
+    fontSize: 15,
+    alignSelf: 'flex-start',
+    marginTop: 1,
   },
 });

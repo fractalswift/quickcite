@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const SettingButton = ({ iconName, buttonName }) => {
+const SettingButton = ({ iconName, buttonName, onPress }) => {
   return (
-    <TouchableOpacity style={styles.settingButton}>
+    <TouchableOpacity style={styles.settingButton} onPress={onPress}>
       <Ionicons name={iconName} size={40} color={'grey'} />
       <Text style={styles.settingText}>{buttonName}</Text>
     </TouchableOpacity>

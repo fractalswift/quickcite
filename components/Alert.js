@@ -18,10 +18,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FCE8E8',
     borderRadius: 5,
     width: 300,
-    height: 100,
+    height: 'auto',
     marginTop: 20,
     padding: 20,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   alertMessage: {
     color: 'darkred',

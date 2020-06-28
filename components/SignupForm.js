@@ -3,16 +3,28 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import FormInput from './FormInput';
 import BigButton from './BigButton';
+import Alert from './Alert';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-  const [errorMesssage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSignUp = () => {
-    console.log('signing up!');
-    firebase.auth().createUserWithEmailAndPassword(email, password);
+  const handleSignUp = async () => {
+    if (password !== password2) {
+      setErrorMessage('Passwords do not match.');
+    } else {
+      try {
+        console.log('signing up!');
+        let response = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(email.toString().trim(), password);
+        console.log(response);
+      } catch (error) {
+        setErrorMessage('Sign up failed.');
+      }
+    }
   };
 
   return (
@@ -40,12 +52,13 @@ const SignupForm = () => {
       />
       <FormInput
         label='Password2'
-        value={password}
-        onChangeText={setPassword}
+        value={password2}
+        onChangeText={setPassword2}
         placeholder={'Confirm password...'}
         secureTextEntry
       />
       <BigButton label='Sign up' onPress={handleSignUp} />
+      {errorMessage ? <Alert errorMessage={errorMessage} /> : null}
     </View>
   );
 };
