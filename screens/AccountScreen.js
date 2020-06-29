@@ -11,7 +11,9 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import SettingButton from '../components/SettingButton';
+import Colors from '../constants/Colors';
+
+import BigButton from '../components/BigButton';
 
 import checkAuth from '../hooks/checkAuth';
 import NotLoggedIn from '../components/NotLoggedIn';
@@ -37,19 +39,27 @@ export default function AccountScreen() {
             contentContainerStyle={styles.contentContainer}
           >
             <View style={styles.welcomeContainer}>
-              <SettingButton
-                name='Sign out'
+              <BigButton
+                label='Sign out'
                 icon='md-log-out'
                 onPress={signOut}
-                color='skyblue'
+                color={Colors.tintColor}
               />
-              <SettingButton name='Dark mode' icon='md-moon' color='skyblue' />
-              <SettingButton name='Sync' icon='md-sync' color='skyblue' />
-              <SettingButton name='Security' icon='md-key' color='skyblue' />
-              <SettingButton
-                name='Text size'
+              <BigButton
+                label='Dark mode'
+                icon='md-moon'
+                color={Colors.tintColor}
+              />
+              <BigButton label='Sync' icon='md-sync' color={Colors.tintColor} />
+              <BigButton
+                label='Security'
+                icon='md-key'
+                color={Colors.tintColor}
+              />
+              <BigButton
+                label='Text size'
                 icon='md-resize'
-                color='skyblue'
+                color={Colors.tintColor}
               />
             </View>
           </ScrollView>

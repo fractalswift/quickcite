@@ -6,24 +6,34 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import NotLoggedIn from '../components/NotLoggedIn';
 
+import Selector from '../components/Selector';
+import SavedArticlesList from '../components/SavedArticlesList';
+
 export default function SavedScreen() {
   const [getUserStatus, isSignedIn] = checkAuth();
+
+  const [page, setPage] = useState('Articles');
 
   useEffect(() => {
     getUserStatus();
   });
 
-  console.log('signed in? :', isSignedIn);
-
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {isSignedIn ? (
-          <Text> Your saved articles here </Text>
-        ) : (
+      {isSignedIn ? (
+        <ScrollView>
+          <Selector
+            page={page}
+            setPage={setPage}
+            titles={['Articles', 'Citations']}
+          />
+          <SavedArticlesList />
+        </ScrollView>
+      ) : (
+        <View>
           <NotLoggedIn screenTitle='saved articles and citations' />
-        )}
-      </ScrollView>
+        </View>
+      )}
     </View>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const SettingButton = ({ name, color, icon, onPress }) => {
+const SettingButton = ({ label, color, icon, onPress }) => {
   return (
     <View>
       <TouchableOpacity style={buttonStyle(color)} onPress={onPress}>
@@ -12,7 +12,7 @@ const SettingButton = ({ name, color, icon, onPress }) => {
           style={{ marginBottom: -3 }}
           color='black'
         />
-        <Text style={{ marginLeft: 20, fontSize: 18 }}>{name}</Text>
+        <Text style={{ marginLeft: 20, fontSize: 18 }}>{label}</Text>
       </TouchableOpacity>
     </View>
   );

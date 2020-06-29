@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import FormInput from './FormInput';
 import BigButton from './BigButton';
@@ -11,6 +11,11 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Clean up to avoid memory leak from loading state
+  useEffect(() => {
+    return setLoading(false);
+  });
 
   const handleSignIn = async () => {
     console.log('handle called');

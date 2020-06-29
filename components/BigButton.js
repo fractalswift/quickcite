@@ -29,10 +29,11 @@ buttonStyle = function (myColor) {
     width: 290,
     marginTop: 20,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
     borderRadius: 10,
     elevation: 15,
     marginLeft: 10,
+    paddingLeft: 20,
     flexDirection: 'row',
   };
 };
