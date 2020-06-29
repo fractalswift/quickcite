@@ -10,9 +10,9 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 
 import ArticleScreen from './screens/ArticleScreen';
-import { firebaseConfig } from './env/firebaseConfig';
+import CollectionScreen from './screens/CollectionScreen';
 
-import Header from './components/Header';
+import { firebaseConfig } from './env/firebaseConfig';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +30,7 @@ export default function App(props) {
           <Stack.Navigator>
             <Stack.Screen name='Root' component={BottomTabNavigator} />
             <Stack.Screen name='Article' component={ArticleScreen} />
+            <Stack.Screen name='Collection' component={CollectionScreen} />
           </Stack.Navigator>
         </NavigationContainer>
         <StatusBar style='auto' />

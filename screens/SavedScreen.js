@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import NotLoggedIn from '../components/NotLoggedIn';
 
 import Selector from '../components/Selector';
-import SavedArticlesList from '../components/SavedArticlesList';
+import AllSaved from '../components/AllSaved';
 
 const dummyData = [
   {
@@ -48,7 +48,7 @@ const dummyData = [
   },
 ];
 
-export default function SavedScreen() {
+export default function SavedScreen({ navigation }) {
   const [getUserStatus, isSignedIn] = checkAuth();
 
   const [page, setPage] = useState('Articles');
@@ -66,7 +66,11 @@ export default function SavedScreen() {
       />
       <ScrollView>
         {isSignedIn ? (
-          <SavedArticlesList savedArticles={dummyData} />
+          <AllSaved
+            navigation={navigation}
+            page={page}
+            savedArticles={dummyData}
+          />
         ) : (
           <NotLoggedIn screenTitle='saved articles and citations' />
         )}
