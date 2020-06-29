@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-
+import Colors from '../constants/Colors';
 const Selector = ({ page, setPage, titles }) => {
   console.log(page);
   return (
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'whitesmoke',
   },
   currentTab: {
-    backgroundColor: 'skyblue',
+    backgroundColor: Colors.tintColor,
     flex: 1,
     textAlign: 'center',
     height: '100%',

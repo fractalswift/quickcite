@@ -9,6 +9,45 @@ import NotLoggedIn from '../components/NotLoggedIn';
 import Selector from '../components/Selector';
 import SavedArticlesList from '../components/SavedArticlesList';
 
+const dummyData = [
+  {
+    title:
+      ' est ex dolor anim ullamco do. Ad do labore labore pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
+    doi: '3262738:wejklj',
+    identifier: '12dft003',
+  },
+  {
+    title:
+      ' ex dolor anim ullamco do. Ad do labore labore pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
+    doi: '3262738:wejklj',
+    identifier: '12df4t43',
+  },
+  {
+    title:
+      'lamco do. Ad do labore labore pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
+    doi: '3262738:wejklj',
+    identifier: '122dft43',
+  },
+  {
+    title:
+      'bore pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
+    doi: '3262738:wejklj',
+    identifier: '12dft43',
+  },
+  {
+    title:
+      'pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
+    doi: '3262738:wejklj',
+    identifier: '12dft23',
+  },
+  {
+    title:
+      ' Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
+    doi: '3262738:wejklj',
+    identifier: '12dgt43',
+  },
+];
+
 export default function SavedScreen() {
   const [getUserStatus, isSignedIn] = checkAuth();
 
@@ -20,20 +59,18 @@ export default function SavedScreen() {
 
   return (
     <View style={styles.container}>
-      {isSignedIn ? (
-        <ScrollView>
-          <Selector
-            page={page}
-            setPage={setPage}
-            titles={['Articles', 'Citations']}
-          />
-          <SavedArticlesList />
-        </ScrollView>
-      ) : (
-        <View>
+      <Selector
+        page={page}
+        setPage={setPage}
+        titles={['Articles', 'Citations']}
+      />
+      <ScrollView>
+        {isSignedIn ? (
+          <SavedArticlesList savedArticles={dummyData} />
+        ) : (
           <NotLoggedIn screenTitle='saved articles and citations' />
-        </View>
-      )}
+        )}
+      </ScrollView>
     </View>
   );
 }

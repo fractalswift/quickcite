@@ -3,15 +3,18 @@ import { Flatlist, ScrollView } from 'react-native';
 
 import SavedItem from './SavedItem';
 
-const SavedArticlesList = () => {
+const SavedArticlesList = ({ savedArticles }) => {
   return (
     <ScrollView>
-      <SavedItem articleTitle='Test article' doi='hjhfaf23234' />
-      <SavedItem articleTitle='Test article' doi='hjhfaf23234' />
-
-      <SavedItem articleTitle='Test article' doi='hjhfaf23234' />
-
-      <SavedItem articleTitle='Test article' doi='hjhfaf23234' />
+      {savedArticles.map((article) => {
+        return (
+          <SavedItem
+            articleTitle={article.title}
+            doi={article.doi}
+            key={article.identifier}
+          />
+        );
+      })}
     </ScrollView>
   );
 };
