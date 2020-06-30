@@ -12,10 +12,11 @@ export default () => {
   const searchApi = async (searchTerm) => {
     setLoading(true);
     try {
-      const response = await springer.get('/metadata/json', {
+      const response = await springer.get('/openaccess/json', {
         params: {
           api_key: api_keys.api_key,
           q: `keyword:${searchTerm}`,
+          p: 20,
         },
       });
 

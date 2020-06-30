@@ -1,26 +1,43 @@
 import * as WebBrowser from 'expo-web-browser';
-import React, { useState } from 'react';
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Linking,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Platform, StyleSheet, Text, View, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import FloatingButton from '../components/FloatingButton';
 import Colors from '../constants/Colors';
 import Header from '../components/Header';
+import Spinner from '../components/Spinner';
+import BigButton from '../components/BigButton';
+
+import axios from 'axios';
 
 export default function ArticleScreen({ route, navigation }) {
   const title = route.params.title;
   const authors = route.params.authors;
   const pubDate = route.params.pubDate;
   const pubName = route.params.pubName;
-  const abstract = route.params.abstract;
   const url = route.params.url;
+  const doi = route.params.doi;
+
+  const [article, setArticle] = useState([
+    { format: 'title', content: 'Loading article...' },
+  ]);
+
+  const [loading, setLoading] = useState(true);
+
+  const getArticle = async (doi) => {
+    const response = await axios.get(
+      `https://us-central1-quickcite-281819.cloudfunctions.net/get_article?message=${doi}`
+    );
+
+    setArticle(response.data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getArticle(doi);
+
+    return setArticle(article);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -28,7 +45,7 @@ export default function ArticleScreen({ route, navigation }) {
       <View style={styles.topButtons}>
         <FloatingButton color='skyblue' name='save' icon='md-save' />
         <FloatingButton color='violet' name='cite' icon='md-quote' />
-        <FloatingButton color='palegoldenrod' name='web' icon='md-code' />
+        <FloatingButton color='palegoldenrod' name='web' icon='md-globe' />
       </View>
 
       <ScrollView
@@ -45,11 +62,27 @@ export default function ArticleScreen({ route, navigation }) {
             return <Text key={obj.creator}>{obj.creator}</Text>;
           })}
         </View>
-        <Text style={styles.articleTitle}>ABSTRACT</Text>
-        <Text style={styles.abstract}>{abstract}</Text>
-        <Text style={styles.readMore} onPress={() => Linking.openURL(url)}>
-          Go to full article
-        </Text>
+
+        {article.map((section) => {
+          if (section.format === 'title') {
+            return (
+              <Text style={{ fontWeight: 'bold' }}>{section.content}</Text>
+            );
+          } else {
+            return <Text>{section.content}</Text>;
+          }
+        })}
+
+        {loading ? <Spinner /> : null}
+
+        <View style={styles.readMore}>
+          <BigButton
+            label='Go to full article'
+            icon='md-globe'
+            color='black'
+            onPress={() => Linking.openURL(url)}
+          />
+        </View>
       </ScrollView>
     </View>
   );

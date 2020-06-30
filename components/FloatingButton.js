@@ -20,7 +20,7 @@ const FloatingButton = ({ name, color, icon }) => {
 
 // not using stylesheet as want to change bgcolor as prop
 
-floatingButtonStyle = function (myColor) {
+const floatingButtonStyle = function (myColor) {
   return {
     backgroundColor: myColor,
     height: 55,

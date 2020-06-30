@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const SettingButton = ({ label, color, icon, onPress }) => {
+const BigButton = ({ label, color, icon, onPress }) => {
   return (
     <View>
       <TouchableOpacity style={buttonStyle(color)} onPress={onPress}>
@@ -22,7 +22,7 @@ const SettingButton = ({ label, color, icon, onPress }) => {
 
 // not using stylesheet as want to change bgcolor as prop
 
-buttonStyle = function (myColor) {
+const buttonStyle = function (myColor) {
   return {
     backgroundColor: myColor,
     height: 55,
@@ -38,4 +38,4 @@ buttonStyle = function (myColor) {
   };
 };
 
-export default SettingButton;
+export default BigButton;

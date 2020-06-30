@@ -7,8 +7,6 @@ const ResultsDetail = ({ result, identifier }) => {
   // TODO build in handling for weirdly formatted results
 
   if (typeof result.title === 'string') {
-    const abstract = result.abstract.slice(0, 300);
-
     return (
       <View style={styles.container}>
         <View style={styles.journal}>
@@ -18,7 +16,6 @@ const ResultsDetail = ({ result, identifier }) => {
           <Text style={styles.articleDate}>
             Published: {result.publicationDate}
           </Text>
-          <Text style={styles.abstract}>{abstract}...</Text>
           <Text style={styles.readMore}>Read more...</Text>
         </View>
       </View>
