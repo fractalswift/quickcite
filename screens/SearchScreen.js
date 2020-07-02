@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import * as WebBrowser from 'expo-web-browser';
 import React, { useState } from 'react';
 import {

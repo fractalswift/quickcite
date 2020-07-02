@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+
 import * as WebBrowser from 'expo-web-browser';
 import React, { useState, useEffect } from 'react';
 import { Platform, StyleSheet, Text, View, Linking } from 'react-native';
@@ -9,6 +11,7 @@ import Spinner from '../components/Spinner';
 import BigButton from '../components/BigButton';
 
 import axios from 'axios';
+import { addData, hello } from '../firebase/firebase.utils';
 
 export default function ArticleScreen({ route, navigation }) {
   const title = route.params.title;
@@ -33,6 +36,13 @@ export default function ArticleScreen({ route, navigation }) {
     setLoading(false);
   };
 
+  // This adds saved article to user profile
+
+  // const saveArticleForUser = () => {
+  //   addData();
+  //   console.log('did it');
+  // };
+
   useEffect(() => {
     getArticle(doi);
 
@@ -43,9 +53,19 @@ export default function ArticleScreen({ route, navigation }) {
     <View style={styles.container}>
       <Header />
       <View style={styles.topButtons}>
-        <FloatingButton color='skyblue' name='save' icon='md-save' />
+        <FloatingButton
+          color='skyblue'
+          name='save'
+          icon='md-save'
+          onPress={() => hello()}
+        />
         <FloatingButton color='violet' name='cite' icon='md-quote' />
-        <FloatingButton color='palegoldenrod' name='web' icon='md-globe' />
+        <FloatingButton
+          color='palegoldenrod'
+          name='web'
+          icon='md-globe'
+          onPress={() => Linking.openURL(url)}
+        />
       </View>
 
       <ScrollView
