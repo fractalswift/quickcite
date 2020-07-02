@@ -36,12 +36,39 @@ export default function ArticleScreen({ route, navigation }) {
     setLoading(false);
   };
 
+  // get current user
+
+  const { currentUser } = firebase.auth();
+
+  // check if current article already exists in user'db
+  const checkIfArticleSaved = async () => {
+    firebase
+      .database()
+      .ref(`users/${currentUser.uid}/savedArticles`)
+      .orderByChild('doi')
+      .equalTo(doi)
+      .once('value', (snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          console.log('exists!', userData);
+        } else {
+          console.log('no existe!');
+        }
+      });
+  };
+
   // This adds saved article to user profile
 
-  // const saveArticleForUser = () => {
-  //   addData();
-  //   console.log('did it');
-  // };
+  const saveArticleForUser = async () => {
+    const record = { title, doi };
+
+    const response = await firebase
+      .database()
+      .ref(`users/${currentUser.uid}/savedArticles`)
+      .push(record);
+
+    console.log('res:', response);
+  };
 
   useEffect(() => {
     getArticle(doi);
@@ -57,9 +84,14 @@ export default function ArticleScreen({ route, navigation }) {
           color='skyblue'
           name='save'
           icon='md-save'
-          onPress={() => hello()}
+          onPress={() => saveArticleForUser()}
         />
-        <FloatingButton color='violet' name='cite' icon='md-quote' />
+        <FloatingButton
+          color='violet'
+          name='cite'
+          icon='md-quote'
+          onPress={() => checkIfArticleSaved()}
+        />
         <FloatingButton
           color='palegoldenrod'
           name='web'
