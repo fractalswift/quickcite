@@ -3,9 +3,14 @@ import React from 'react';
 import SavedCitationList from './SavedCitationsList';
 import SavedArticlesList from './SavedArticlesList';
 
-const AllSaved = ({ savedArticles, page, navigation }) => {
+const AllSaved = ({ savedArticles, page, navigation, unsaveArticle }) => {
   if (page === 'Articles') {
-    return <SavedArticlesList savedArticles={savedArticles} />;
+    return (
+      <SavedArticlesList
+        savedArticles={savedArticles}
+        unsaveArticle={unsaveArticle}
+      />
+    );
   } else {
     return (
       <SavedCitationList

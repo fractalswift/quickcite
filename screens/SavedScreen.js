@@ -70,12 +70,36 @@ export default function SavedScreen({ navigation }) {
       });
   };
 
+  const unsaveArticle = async (doi) => {
+    firebase
+      .database()
+      .ref(`users/${currentUser.uid}/savedArticles`)
+      .orderByChild('doi')
+      .equalTo(doi)
+      .once('value', (snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          const key = Object.keys(userData)[0];
+          console.log(key);
+
+          firebase
+            .database()
+            .ref(`users/${currentUser.uid}/savedArticles/${key}`)
+            .remove();
+
+          console.log('deleted');
+        } else {
+          console.log('not there in the first place');
+        }
+      });
+  };
+
   useEffect(() => {
     getUserStatus();
     if (isSignedIn) {
       getSavedArticles(currentUser.uid);
     }
-  }, []);
+  });
 
   return (
     <View style={styles.container}>
@@ -90,6 +114,7 @@ export default function SavedScreen({ navigation }) {
             navigation={navigation}
             page={page}
             savedArticles={savedArticles}
+            unsaveArticle={unsaveArticle}
           />
         ) : (
           <NotLoggedIn screenTitle='saved articles and citations' />

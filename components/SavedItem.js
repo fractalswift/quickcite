@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import FloatingButton from './FloatingButton';
 import Colors from '../constants/Colors';
 
-const SavedItem = ({ articleTitle, doi }) => {
+const SavedItem = ({ articleTitle, doi, unsaveArticle }) => {
   return (
     <TouchableOpacity style={styles.box}>
       <View style={styles.articleTitle}>
@@ -17,6 +17,9 @@ const SavedItem = ({ articleTitle, doi }) => {
           name='unsave'
           icon='md-remove-circle-outline'
           color='crimson'
+          onPress={() => {
+            unsaveArticle(doi);
+          }}
         />
       </View>
     </TouchableOpacity>

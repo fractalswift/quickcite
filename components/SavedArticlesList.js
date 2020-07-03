@@ -3,7 +3,7 @@ import { ScrollView, Text, View, StyleSheet } from 'react-native';
 
 import SavedItem from './SavedItem';
 
-const SavedArticlesList = ({ savedArticles }) => {
+const SavedArticlesList = ({ savedArticles, unsaveArticle }) => {
   return (
     <View>
       <Text style={styles.articleCount}>
@@ -16,6 +16,7 @@ const SavedArticlesList = ({ savedArticles }) => {
               articleTitle={article.title}
               doi={article.doi}
               key={article.identifier}
+              unsaveArticle={unsaveArticle}
             />
           );
         })}
