@@ -3,16 +3,23 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import FloatingButton from './FloatingButton';
 import Colors from '../constants/Colors';
 
-const SavedItem = ({ articleTitle, doi, unsaveArticle }) => {
+const SavedItem = ({ articleTitle, doi, unsaveArticle, navigate }) => {
   return (
-    <TouchableOpacity style={styles.box}>
+    <View style={styles.box}>
       <View style={styles.articleTitle}>
         <Text style={{ fontWeight: 'bold', fontSize: 18 }} t>
           {articleTitle.slice(0, 170)}...
         </Text>
       </View>
       <View style={styles.buttons}>
-        <FloatingButton name='cite' icon='md-quote' color={Colors.tintColor} />
+        <FloatingButton
+          name='cite'
+          icon='md-quote'
+          color={Colors.tintColor}
+          onPress={() => {
+            console.log('pressed cite');
+          }}
+        />
         <FloatingButton
           name='unsave'
           icon='md-remove-circle-outline'
@@ -22,7 +29,7 @@ const SavedItem = ({ articleTitle, doi, unsaveArticle }) => {
           }}
         />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

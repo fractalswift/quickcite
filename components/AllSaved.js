@@ -9,6 +9,7 @@ const AllSaved = ({ savedArticles, page, navigation, unsaveArticle }) => {
       <SavedArticlesList
         savedArticles={savedArticles}
         unsaveArticle={unsaveArticle}
+        navigation={navigation}
       />
     );
   } else {

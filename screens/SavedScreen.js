@@ -9,63 +9,22 @@ import NotLoggedIn from '../components/NotLoggedIn';
 import Selector from '../components/Selector';
 import AllSaved from '../components/AllSaved';
 
-const dummyData = [
-  {
-    title:
-      ' est ex dolor anim ullamco do. Ad do labore labore pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
-    doi: '3262738:wejklj',
-    identifier: '12dft003',
-  },
-  {
-    title:
-      ' ex dolor anim ullamco do. Ad do labore labore pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
-    doi: '3262738:wejklj',
-    identifier: '12df4t43',
-  },
-  {
-    title:
-      'lamco do. Ad do labore labore pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
-    doi: '3262738:wejklj',
-    identifier: '122dft43',
-  },
-  {
-    title:
-      'bore pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
-    doi: '3262738:wejklj',
-    identifier: '12dft43',
-  },
-  {
-    title:
-      'pariatur dolore. Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
-    doi: '3262738:wejklj',
-    identifier: '12dft23',
-  },
-  {
-    title:
-      ' Laborum laborum amet dolore sit eu et adipisicing nostrud quis. Enim fugiat nulla nisi ullamco dolor sint excepteur nostrud culpa reprehenderit dolore laborum reprehenderit cillum. Consectetur cupidatat eiusmod sunt elit incididunt commodo dolore veniam fugiat.',
-    doi: '3262738:wejklj',
-    identifier: '12dgt43',
-  },
-];
-
 export default function SavedScreen({ navigation }) {
-  const [getUserStatus, isSignedIn] = checkAuth();
+  const [getUserStatus, isSignedIn, currentUser] = checkAuth();
 
   // choose whether we display articles or citations component
   const [page, setPage] = useState('Articles');
 
   const [savedArticles, setSavedArticles] = useState([]);
 
-  const { currentUser } = firebase.auth();
-
   const getSavedArticles = async (userId) => {
-    console.log(currentUser.uid);
     const articles = await firebase
       .database()
       .ref(`users/${currentUser.uid}/savedArticles`)
       .once('value', (snapshot) => {
-        setSavedArticles(Object.values(snapshot.val()));
-        console.log(savedArticles);
+        if (snapshot.val()) {
+          setSavedArticles(Object.values(snapshot.val()));
+        }
         // setSavedArticles(snapshot);
       });
   };
@@ -80,7 +39,6 @@ export default function SavedScreen({ navigation }) {
         if (snapshot.exists()) {
           const userData = snapshot.val();
           const key = Object.keys(userData)[0];
-          console.log(key);
 
           firebase
             .database()

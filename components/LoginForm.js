@@ -15,7 +15,7 @@ const LoginForm = () => {
   // Clean up to avoid memory leak from loading state
   useEffect(() => {
     return setLoading(false);
-  });
+  }, [loading]);
 
   const handleSignIn = async () => {
     console.log('handle called');

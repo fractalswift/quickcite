@@ -23,7 +23,7 @@ export default function AccountScreen() {
 
   useEffect(() => {
     getUserStatus();
-  });
+  }, [isSignedIn]);
 
   const signOut = () => {
     console.log('signing out');

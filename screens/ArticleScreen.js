@@ -21,6 +21,7 @@ export default function ArticleScreen({ route, navigation }) {
   const url = route.params.url;
   const doi = route.params.doi;
   const identifier = route.params.identifier;
+  const abstract = route.params.abstract;
 
   const [article, setArticle] = useState([
     { format: 'title', content: 'Loading article...' },
@@ -63,7 +64,16 @@ export default function ArticleScreen({ route, navigation }) {
   // This adds saved article to user profile
 
   const saveArticle = async () => {
-    const record = { title, doi, identifier };
+    const record = {
+      title,
+      doi,
+      identifier,
+      abstract,
+      authors,
+      pubDate,
+      pubName,
+      url,
+    };
 
     const response = await firebase
       .database()
@@ -84,7 +94,6 @@ export default function ArticleScreen({ route, navigation }) {
         if (snapshot.exists()) {
           const userData = snapshot.val();
           const key = Object.keys(userData)[0];
-          console.log(key);
 
           firebase
             .database()

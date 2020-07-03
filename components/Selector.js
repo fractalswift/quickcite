@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../constants/Colors';
 const Selector = ({ page, setPage, titles }) => {
-  console.log(page);
   return (
     <View style={styles.container}>
       <TouchableOpacity

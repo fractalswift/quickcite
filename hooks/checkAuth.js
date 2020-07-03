@@ -1,8 +1,6 @@
 import firebase from 'firebase';
 
 import { useState } from 'react';
-import springer from '../api/springer';
-import api_keys from '../env/api_keys.json';
 
 export default () => {
   const [isSignedIn, setSignedIn] = useState(false);
@@ -12,6 +10,7 @@ export default () => {
       if (user) {
         // User is signed in.
         console.log('user is signed in');
+        let { currentUser } = firebase.auth();
         setSignedIn(true);
       } else {
         // No user is signed in.
@@ -21,5 +20,7 @@ export default () => {
     });
   };
 
-  return [getUserStatus, isSignedIn];
+  const { currentUser } = firebase.auth();
+
+  return [getUserStatus, isSignedIn, currentUser];
 };

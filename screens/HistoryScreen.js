@@ -51,7 +51,7 @@ export default function HistoryScreen() {
 
   useEffect(() => {
     getUserStatus();
-  });
+  }, [isSignedIn]);
 
   console.log('signed in? :', isSignedIn);
 
