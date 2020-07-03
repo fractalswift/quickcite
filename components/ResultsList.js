@@ -58,6 +58,7 @@ const ResultsList = ({ title, results, navigation, searchedTerm }) => {
                   pubName: item.publicationName,
                   url: item.url[0].value,
                   doi: item.doi,
+                  identifier: item.identifier,
                 })
               }
             >

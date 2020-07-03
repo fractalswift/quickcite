@@ -51,11 +51,31 @@ const dummyData = [
 export default function SavedScreen({ navigation }) {
   const [getUserStatus, isSignedIn] = checkAuth();
 
+  // choose whether we display articles or citations component
   const [page, setPage] = useState('Articles');
+
+  const [savedArticles, setSavedArticles] = useState([]);
+
+  const { currentUser } = firebase.auth();
+
+  const getSavedArticles = async (userId) => {
+    console.log(currentUser.uid);
+    const articles = await firebase
+      .database()
+      .ref(`users/${currentUser.uid}/savedArticles`)
+      .once('value', (snapshot) => {
+        setSavedArticles(Object.values(snapshot.val()));
+        console.log(savedArticles);
+        // setSavedArticles(snapshot);
+      });
+  };
 
   useEffect(() => {
     getUserStatus();
-  });
+    if (isSignedIn) {
+      getSavedArticles(currentUser.uid);
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -69,7 +89,7 @@ export default function SavedScreen({ navigation }) {
           <AllSaved
             navigation={navigation}
             page={page}
-            savedArticles={dummyData}
+            savedArticles={savedArticles}
           />
         ) : (
           <NotLoggedIn screenTitle='saved articles and citations' />

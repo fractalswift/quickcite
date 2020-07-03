@@ -20,12 +20,17 @@ export default function ArticleScreen({ route, navigation }) {
   const pubName = route.params.pubName;
   const url = route.params.url;
   const doi = route.params.doi;
+  const identifier = route.params.identifier;
 
   const [article, setArticle] = useState([
     { format: 'title', content: 'Loading article...' },
   ]);
 
   const [loading, setLoading] = useState(true);
+
+  const [isSaved, setIsSaved] = useState(false);
+
+  const { currentUser } = firebase.auth();
 
   const getArticle = async (doi) => {
     const response = await axios.get(
@@ -35,10 +40,6 @@ export default function ArticleScreen({ route, navigation }) {
     setArticle(response.data);
     setLoading(false);
   };
-
-  // get current user
-
-  const { currentUser } = firebase.auth();
 
   // check if current article already exists in user'db
   const checkIfArticleSaved = async () => {
@@ -50,42 +51,83 @@ export default function ArticleScreen({ route, navigation }) {
       .once('value', (snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
-          console.log('exists!', userData);
+          setIsSaved(true);
+          console.log('it is saved');
         } else {
-          console.log('no existe!');
+          setIsSaved(false);
+          console.log('it is not saved');
         }
       });
   };
 
   // This adds saved article to user profile
 
-  const saveArticleForUser = async () => {
-    const record = { title, doi };
+  const saveArticle = async () => {
+    const record = { title, doi, identifier };
 
     const response = await firebase
       .database()
       .ref(`users/${currentUser.uid}/savedArticles`)
       .push(record);
 
-    console.log('res:', response);
+    // Change the save icon to unsave
+    setIsSaved(true);
+  };
+
+  const unsaveArticle = async () => {
+    firebase
+      .database()
+      .ref(`users/${currentUser.uid}/savedArticles`)
+      .orderByChild('doi')
+      .equalTo(doi)
+      .once('value', (snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          const key = Object.keys(userData)[0];
+          console.log(key);
+
+          firebase
+            .database()
+            .ref(`users/${currentUser.uid}/savedArticles/${key}`)
+            .remove();
+
+          setIsSaved(false);
+
+          console.log('deleted');
+        } else {
+          setIsSaved(false);
+          console.log('not there in the first place');
+        }
+      });
   };
 
   useEffect(() => {
     getArticle(doi);
+    checkIfArticleSaved();
 
     return setArticle(article);
-  }, []);
+  }, [isSaved]);
 
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.topButtons}>
-        <FloatingButton
-          color='skyblue'
-          name='save'
-          icon='md-save'
-          onPress={() => saveArticleForUser()}
-        />
+        {isSaved ? (
+          <FloatingButton
+            color='crimson'
+            name='unsave'
+            icon='md-close-circle-outline'
+            onPress={() => unsaveArticle()}
+          />
+        ) : (
+          <FloatingButton
+            color='skyblue'
+            name='save'
+            icon='md-save'
+            onPress={() => saveArticle()}
+          />
+        )}
+
         <FloatingButton
           color='violet'
           name='cite'
