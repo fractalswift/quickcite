@@ -99,7 +99,7 @@ export default function SavedScreen({ navigation }) {
     if (isSignedIn) {
       getSavedArticles(currentUser.uid);
     }
-  });
+  }, [isSignedIn, savedArticles]);
 
   return (
     <View style={styles.container}>
