@@ -13,6 +13,7 @@ import BigButton from '../components/BigButton';
 import axios from 'axios';
 
 import useSavedArticles from '../hooks/useSavedArticles';
+import checkAuth from '../hooks/checkAuth';
 
 export default function ArticleScreen({ route, navigation }) {
   const title = route.params.title;
@@ -32,7 +33,7 @@ export default function ArticleScreen({ route, navigation }) {
 
   const [isSaved, setIsSaved] = useState(false);
 
-  const { currentUser } = firebase.auth();
+  const [getUserStatus, isSignedIn, currentUser] = checkAuth();
 
   const [
     savedArticles,
@@ -95,9 +96,10 @@ export default function ArticleScreen({ route, navigation }) {
   useEffect(() => {
     getArticle(doi);
     checkIfArticleSaved();
+    getSavedArticles(currentUser.uid);
 
     return setArticle(article);
-  }, [isSaved]);
+  }, [isSaved, currentUser]);
 
   return (
     <View style={styles.container}>
@@ -108,7 +110,11 @@ export default function ArticleScreen({ route, navigation }) {
             color='crimson'
             name='unsave'
             icon='md-close-circle-outline'
-            onPress={() => unsaveArticle(doi)}
+            onPress={() => {
+              unsaveArticle(doi);
+              setIsSaved(false);
+              getSavedArticles(currentUser.uid);
+            }}
           />
         ) : (
           <FloatingButton
@@ -151,10 +157,12 @@ export default function ArticleScreen({ route, navigation }) {
         {article.map((section) => {
           if (section.format === 'title') {
             return (
-              <Text style={{ fontWeight: 'bold' }}>{section.content}</Text>
+              <Text key={section.content} style={{ fontWeight: 'bold' }}>
+                {section.content}
+              </Text>
             );
           } else {
-            return <Text>{section.content}</Text>;
+            return <Text key={section.content}>{section.content}</Text>;
           }
         })}
 

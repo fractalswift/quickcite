@@ -40,9 +40,7 @@ export default function SavedScreen({ navigation }) {
         setPage={setPage}
         titles={['Articles', 'Citations']}
       />
-      <Text style={{ marginTop: 50 }} onPress={() => getSavedArticles()}>
-        RESET
-      </Text>
+
       <ScrollView>
         {isSignedIn ? (
           <AllSaved

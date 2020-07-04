@@ -6,20 +6,28 @@ export default () => {
   const [savedArticles, setSavedArticles] = useState([]);
   const [getUserStatus, isSignedIn, currentUser] = checkAuth();
 
+  //   const getSavedArticles = async (userId) => {
+  //     const articles = await firebase
+  //       .database()
+  //       .ref(`users/${currentUser.uid}/savedArticles`)
+  //       .once('value', (snapshot) => {
+  //         if (snapshot.val()) {
+  //           // TODO clean this up
+  //         }
+  //       });
+
   const getSavedArticles = async (userId) => {
+    console.log('calling getSavedArticles from hooks');
+
     const articles = await firebase
       .database()
       .ref(`users/${currentUser.uid}/savedArticles`)
-      .once('value', (snapshot) => {
-        if (snapshot.val()) {
-          // TODO clean this up
-        }
-      });
+      .once('value');
 
     if (!articles.toJSON()) {
       setSavedArticles([]);
     } else {
-      const updatedArticles = Object.values(articles.toJSON());
+      const updatedArticles = await Object.values(articles.toJSON());
       setSavedArticles(updatedArticles);
     }
   };

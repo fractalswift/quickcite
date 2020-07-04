@@ -61,6 +61,7 @@ const ResultsList = ({ title, results, navigation, searchedTerm }) => {
                   identifier: item.identifier,
                 })
               }
+              // onPress={() => console.log(item)}
             >
               <ResultsDetail result={item} identifier={item.identifier} />
             </TouchableOpacity>

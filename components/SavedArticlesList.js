@@ -1,4 +1,6 @@
-import React from 'react';
+import checkAuth from '../hooks/checkAuth';
+
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -8,12 +10,30 @@ import {
 } from 'react-native';
 
 import SavedItem from './SavedItem';
+import useSavedArticles from '../hooks/useSavedArticles';
 
-const SavedArticlesList = ({ savedArticles, unsaveArticle, navigation }) => {
+const SavedArticlesList = ({ navigation }) => {
+  const [getUserStatus, isSignedIn, currentUser] = checkAuth();
+
+  const [
+    savedArticles,
+    setSavedArticles,
+    getSavedArticles,
+    unsaveArticle,
+  ] = useSavedArticles();
+
+  useEffect(() => {}, [savedArticles]);
+
   return (
     <View>
       <Text style={styles.articleCount}>
         You have {savedArticles.length || 0} saved articles.
+      </Text>
+      <Text
+        style={styles.articleCount}
+        onPress={() => getSavedArticles(currentUser.uid)}
+      >
+        Press here to refresh
       </Text>
       <View>
         <FlatList
@@ -27,7 +47,7 @@ const SavedArticlesList = ({ savedArticles, unsaveArticle, navigation }) => {
                   navigation.navigate('Article', {
                     abstract: item.abstract,
                     title: item.title,
-                    authors: item.authors,
+                    authors: Object.values(item.authors),
                     pubDate: item.publicationDate,
                     pubName: item.publicationName,
                     url: item.url[0].value,
