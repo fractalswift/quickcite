@@ -1,29 +1,27 @@
 import firebase from 'firebase';
-
-import * as WebBrowser from 'expo-web-browser';
 import React, { useState, useEffect } from 'react';
-import { Platform, StyleSheet, Text, View, Linking } from 'react-native';
+import { StyleSheet, Text, View, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import FloatingButton from '../components/FloatingButton';
+import axios from 'axios';
+
+import { BigButton, Spinner, FloatingButton } from '../components/common';
 import Colors from '../constants/Colors';
 import Header from '../components/Header';
-import Spinner from '../components/Spinner';
-import BigButton from '../components/BigButton';
-
-import axios from 'axios';
 
 import useSavedArticles from '../hooks/useSavedArticles';
 import checkAuth from '../hooks/checkAuth';
 
 export default function ArticleScreen({ route, navigation }) {
-  const title = route.params.title;
-  const authors = route.params.authors;
-  const pubDate = route.params.pubDate;
-  const pubName = route.params.pubName;
-  const url = route.params.url;
-  const doi = route.params.doi;
-  const identifier = route.params.identifier;
-  const abstract = route.params.abstract;
+  const {
+    title,
+    authors,
+    pubDate,
+    pubName,
+    url,
+    doi,
+    identifier,
+    abstract,
+  } = route.params;
 
   const [article, setArticle] = useState([
     { format: 'title', content: 'Loading article...' },
@@ -147,22 +145,21 @@ export default function ArticleScreen({ route, navigation }) {
         <Text style={styles.journalName}>{pubName}</Text>
         <Text style={styles.journalName}>{pubDate}</Text>
 
+        <Text style={{ fontWeight: 'bold' }}>Authors:</Text>
         <View style={styles.authors}>
-          <Text>Authors:</Text>
-          {authors.map((obj) => {
-            return <Text key={obj.creator}>{obj.creator}</Text>;
+          {authors.map((obj, index) => {
+            return <Text key={index}>{obj.creator}</Text>;
           })}
         </View>
-
-        {article.map((section) => {
+        {article.map((section, index) => {
           if (section.format === 'title') {
             return (
-              <Text key={section.content} style={{ fontWeight: 'bold' }}>
+              <Text key={index} style={{ fontWeight: 'bold' }}>
                 {section.content}
               </Text>
             );
           } else {
-            return <Text key={section.content}>{section.content}</Text>;
+            return <Text key={index}>{section.content}</Text>;
           }
         })}
 
@@ -185,41 +182,6 @@ ArticleScreen.navigationOptions = {
   header: null,
 };
 
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
-
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use
-        useful development tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
-  }
-}
-
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/development-mode/'
-  );
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -236,13 +198,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: 'transparent',
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
+
   contentContainer: {
     paddingTop: 30,
   },
@@ -251,73 +207,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
   },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
+
   articleTitle: {
     fontWeight: 'bold',
     textAlign: 'center',

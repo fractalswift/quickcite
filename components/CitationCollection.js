@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import FloatingButton from './FloatingButton';
+import { FloatingButton } from './common';
 import Colors from '../constants/Colors';
 
 const CitationCollection = ({ articleTitle, doi, navigation }) => {

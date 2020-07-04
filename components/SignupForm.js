@@ -2,9 +2,7 @@ import firebase from 'firebase';
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import FormInput from './FormInput';
-import BigButton from './BigButton';
-import Alert from './Alert';
-import Spinner from './Spinner';
+import { BigButton, Alert, Spinner } from '../components/common';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');

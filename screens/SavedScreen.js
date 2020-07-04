@@ -1,9 +1,7 @@
-import firebase from 'firebase';
 import checkAuth from '../hooks/checkAuth';
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
 import NotLoggedIn from '../components/NotLoggedIn';
 
 import Selector from '../components/Selector';
@@ -41,7 +39,7 @@ export default function SavedScreen({ navigation }) {
         titles={['Articles', 'Citations']}
       />
 
-      <ScrollView>
+      <View>
         {isSignedIn ? (
           <AllSaved
             navigation={navigation}
@@ -52,7 +50,7 @@ export default function SavedScreen({ navigation }) {
         ) : (
           <NotLoggedIn screenTitle='saved articles and citations' />
         )}
-      </ScrollView>
+      </View>
     </View>
   );
 }
