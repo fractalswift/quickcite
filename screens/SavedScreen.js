@@ -41,7 +41,7 @@ export default function SavedScreen({ navigation }) {
         titles={['Articles', 'Citations']}
       />
 
-      <ScrollView>
+      <View>
         {isSignedIn ? (
           <AllSaved
             navigation={navigation}
@@ -52,7 +52,7 @@ export default function SavedScreen({ navigation }) {
         ) : (
           <NotLoggedIn screenTitle='saved articles and citations' />
         )}
-      </ScrollView>
+      </View>
     </View>
   );
 }

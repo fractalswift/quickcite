@@ -39,7 +39,7 @@ export default function SearchScreen({ navigation }) {
 
       {errorMessage ? <Text>{errorMessage} </Text> : null}
 
-      <ScrollView
+      <View
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
@@ -53,7 +53,7 @@ export default function SearchScreen({ navigation }) {
             navigation={navigation}
           />
         )}
-      </ScrollView>
+      </View>
     </View>
   );
 }
