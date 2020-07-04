@@ -23,10 +23,24 @@ export default function SavedScreen({ navigation }) {
       .ref(`users/${currentUser.uid}/savedArticles`)
       .once('value', (snapshot) => {
         if (snapshot.val()) {
-          setSavedArticles(Object.values(snapshot.val()));
+          // update the saved articles
+          let newArticles = Object.values(snapshot.val());
+          let isDiff = newArticles !== savedArticles;
+          console.log(isDiff);
+
+          // if (!isDiff) {
+          //   return setSavedArticles(newArticles);
+          // }
         }
         // setSavedArticles(snapshot);
       });
+
+    if (!articles.toJSON()) {
+      setSavedArticles([]);
+    } else {
+      const updatedArticles = Object.values(articles.toJSON());
+      setSavedArticles(updatedArticles);
+    }
   };
 
   const unsaveArticle = async (doi) => {
@@ -46,6 +60,8 @@ export default function SavedScreen({ navigation }) {
             .remove();
 
           console.log('deleted');
+          // update the savedArticles state
+          getSavedArticles(currentUser.uid);
         } else {
           console.log('not there in the first place');
         }
@@ -53,11 +69,12 @@ export default function SavedScreen({ navigation }) {
   };
 
   useEffect(() => {
+    console.log('useEffect savedScreen');
     getUserStatus();
     if (isSignedIn) {
       getSavedArticles(currentUser.uid);
     }
-  }, [isSignedIn, savedArticles]);
+  }, [currentUser]);
 
   return (
     <View style={styles.container}>
@@ -66,6 +83,9 @@ export default function SavedScreen({ navigation }) {
         setPage={setPage}
         titles={['Articles', 'Citations']}
       />
+      <Text style={{ marginTop: 50 }} onPress={() => getSavedArticles()}>
+        RESET
+      </Text>
       <ScrollView>
         {isSignedIn ? (
           <AllSaved
