@@ -6,7 +6,7 @@ export default () => {
   const [isSignedIn, setSignedIn] = useState(false);
 
   const getUserStatus = async () => {
-    firebase.auth().onAuthStateChanged(function (user) {
+    const unsubscribe = firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // User is signed in.
         console.log('user is signed in');
@@ -17,6 +17,7 @@ export default () => {
         console.log('no user is signed in');
         setSignedIn(false);
       }
+      unsubscribe();
     });
   };
 

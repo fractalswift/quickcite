@@ -1,13 +1,8 @@
 import firebase from 'firebase';
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import FormInput from './FormInput';
-import {
-  BigButton,
-  Alert,
-  Spinner,
-  FloatingButton,
-} from '../components/common';
+import { BigButton, Alert, Spinner } from '../components/common';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -37,13 +32,7 @@ const LoginForm = () => {
   };
 
   return (
-    <View
-      style={{
-        display: 'flex',
-        height: 'auto',
-        alignItems: 'center',
-      }}
-    >
+    <View style={styles.loginForm}>
       <FormInput
         label='Email'
         value={email}
@@ -71,5 +60,13 @@ const LoginForm = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  loginForm: {
+    display: 'flex',
+    height: 'auto',
+    alignItems: 'center',
+  },
+});
 
 export default LoginForm;

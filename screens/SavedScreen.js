@@ -1,7 +1,7 @@
 import checkAuth from '../hooks/checkAuth';
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import NotLoggedIn from '../components/NotLoggedIn';
 
 import Selector from '../components/Selector';
@@ -48,7 +48,9 @@ export default function SavedScreen({ navigation }) {
             unsaveArticle={unsaveArticle}
           />
         ) : (
-          <NotLoggedIn screenTitle='saved articles and citations' />
+          <ScrollView>
+            <NotLoggedIn screenTitle='saved articles and citations' />
+          </ScrollView>
         )}
       </View>
     </View>
