@@ -43,7 +43,7 @@ export default function BottomTabNavigator({ navigation, route }) {
             ),
           }}
         />
-        <BottomTab.Screen
+        {/* <BottomTab.Screen
           name='History'
           component={HistoryScreen}
           options={{
@@ -52,7 +52,7 @@ export default function BottomTabNavigator({ navigation, route }) {
               <TabBarIcon focused={focused} name='md-time' />
             ),
           }}
-        />
+        /> */}
         <BottomTab.Screen
           name='Account'
           component={AccountScreen}
