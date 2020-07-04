@@ -1,6 +1,5 @@
-import * as WebBrowser from 'expo-web-browser';
-import React, { useState } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FloatingButton } from '../components/common';
 import Colors from '../constants/Colors';

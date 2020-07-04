@@ -1,15 +1,5 @@
-import firebase from 'firebase';
-import * as WebBrowser from 'expo-web-browser';
 import React, { useState } from 'react';
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View } from 'react-native';
 
 import SearchBar from '../components/SearchBar';
 import useArticles from '../hooks/useArticles';

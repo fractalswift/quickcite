@@ -2,24 +2,12 @@ import firebase from 'firebase';
 
 import React, { useEffect } from 'react';
 
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import Colors from '../constants/Colors';
 
-// import BigButton from '../components/BigButton';
-import {
-  BigButton,
-  Alert,
-  Spinner,
-  FloatingButton,
-} from '../components/common';
+import { BigButton } from '../components/common';
 
 import checkAuth from '../hooks/checkAuth';
 import NotLoggedIn from '../components/NotLoggedIn';

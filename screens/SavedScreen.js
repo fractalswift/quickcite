@@ -1,9 +1,7 @@
-import firebase from 'firebase';
 import checkAuth from '../hooks/checkAuth';
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
 import NotLoggedIn from '../components/NotLoggedIn';
 
 import Selector from '../components/Selector';
