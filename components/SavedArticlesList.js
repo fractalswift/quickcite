@@ -13,7 +13,7 @@ const SavedArticlesList = ({ savedArticles, unsaveArticle, navigation }) => {
   return (
     <View>
       <Text style={styles.articleCount}>
-        You have {savedArticles.length} saved articles.
+        You have {savedArticles.length || 0} saved articles.
       </Text>
       <View>
         <FlatList

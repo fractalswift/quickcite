@@ -9,39 +9,19 @@ import NotLoggedIn from '../components/NotLoggedIn';
 import Selector from '../components/Selector';
 import AllSaved from '../components/AllSaved';
 
+import useSavedArticles from '../hooks/useSavedArticles';
+
 export default function SavedScreen({ navigation }) {
   const [getUserStatus, isSignedIn, currentUser] = checkAuth();
 
   // choose whether we display articles or citations component
   const [page, setPage] = useState('Articles');
 
-  const [savedArticles, setSavedArticles] = useState([]);
-
-  const getSavedArticles = async (userId) => {
-    const articles = await firebase
-      .database()
-      .ref(`users/${currentUser.uid}/savedArticles`)
-      .once('value', (snapshot) => {
-        if (snapshot.val()) {
-          // update the saved articles
-          let newArticles = Object.values(snapshot.val());
-          let isDiff = newArticles !== savedArticles;
-          console.log(isDiff);
-
-          // if (!isDiff) {
-          //   return setSavedArticles(newArticles);
-          // }
-        }
-        // setSavedArticles(snapshot);
-      });
-
-    if (!articles.toJSON()) {
-      setSavedArticles([]);
-    } else {
-      const updatedArticles = Object.values(articles.toJSON());
-      setSavedArticles(updatedArticles);
-    }
-  };
+  const [
+    savedArticles,
+    setSavedArticles,
+    getSavedArticles,
+  ] = useSavedArticles();
 
   const unsaveArticle = async (doi) => {
     firebase
@@ -68,6 +48,7 @@ export default function SavedScreen({ navigation }) {
       });
   };
 
+  // Get the user's saved articles on sign in / first load
   useEffect(() => {
     console.log('useEffect savedScreen');
     getUserStatus();

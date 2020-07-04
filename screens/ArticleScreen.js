@@ -11,7 +11,8 @@ import Spinner from '../components/Spinner';
 import BigButton from '../components/BigButton';
 
 import axios from 'axios';
-import { addData, hello } from '../firebase/firebase.utils';
+
+import useSavedArticles from '../hooks/useSavedArticles';
 
 export default function ArticleScreen({ route, navigation }) {
   const title = route.params.title;
@@ -32,6 +33,12 @@ export default function ArticleScreen({ route, navigation }) {
   const [isSaved, setIsSaved] = useState(false);
 
   const { currentUser } = firebase.auth();
+
+  const [
+    savedArticles,
+    setSavedArticles,
+    getSavedArticles,
+  ] = useSavedArticles();
 
   const getArticle = async (doi) => {
     const response = await axios.get(
