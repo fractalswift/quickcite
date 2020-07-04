@@ -145,22 +145,21 @@ export default function ArticleScreen({ route, navigation }) {
         <Text style={styles.journalName}>{pubName}</Text>
         <Text style={styles.journalName}>{pubDate}</Text>
 
+        <Text style={{ fontWeight: 'bold' }}>Authors:</Text>
         <View style={styles.authors}>
-          <Text>Authors:</Text>
-          {authors.map((obj) => {
-            return <Text key={obj.creator}>{obj.creator}</Text>;
+          {authors.map((obj, index) => {
+            return <Text key={index}>{obj.creator}</Text>;
           })}
         </View>
-
-        {article.map((section) => {
+        {article.map((section, index) => {
           if (section.format === 'title') {
             return (
-              <Text key={section.content} style={{ fontWeight: 'bold' }}>
+              <Text key={index} style={{ fontWeight: 'bold' }}>
                 {section.content}
               </Text>
             );
           } else {
-            return <Text key={section.content}>{section.content}</Text>;
+            return <Text key={index}>{section.content}</Text>;
           }
         })}
 
