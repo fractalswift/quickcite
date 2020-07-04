@@ -38,6 +38,7 @@ export default function ArticleScreen({ route, navigation }) {
     savedArticles,
     setSavedArticles,
     getSavedArticles,
+    unsaveArticle,
   ] = useSavedArticles();
 
   const getArticle = async (doi) => {
@@ -91,32 +92,6 @@ export default function ArticleScreen({ route, navigation }) {
     setIsSaved(true);
   };
 
-  const unsaveArticle = async () => {
-    firebase
-      .database()
-      .ref(`users/${currentUser.uid}/savedArticles`)
-      .orderByChild('doi')
-      .equalTo(doi)
-      .once('value', (snapshot) => {
-        if (snapshot.exists()) {
-          const userData = snapshot.val();
-          const key = Object.keys(userData)[0];
-
-          firebase
-            .database()
-            .ref(`users/${currentUser.uid}/savedArticles/${key}`)
-            .remove();
-
-          setIsSaved(false);
-
-          console.log('deleted');
-        } else {
-          setIsSaved(false);
-          console.log('not there in the first place');
-        }
-      });
-  };
-
   useEffect(() => {
     getArticle(doi);
     checkIfArticleSaved();
@@ -133,7 +108,7 @@ export default function ArticleScreen({ route, navigation }) {
             color='crimson'
             name='unsave'
             icon='md-close-circle-outline'
-            onPress={() => unsaveArticle()}
+            onPress={() => unsaveArticle(doi)}
           />
         ) : (
           <FloatingButton
