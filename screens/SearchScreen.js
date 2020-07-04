@@ -14,7 +14,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import SearchBar from '../components/SearchBar';
 import useArticles from '../hooks/useArticles';
 import ResultsList from '../components/ResultsList';
-import Spinner from '../components/Spinner';
+import {
+  BigButton,
+  Alert,
+  Spinner,
+  FloatingButton,
+} from '../components/common';
 
 export default function SearchScreen({ navigation }) {
   const [term, setTerm] = useState('');

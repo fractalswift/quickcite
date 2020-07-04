@@ -13,7 +13,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import Colors from '../constants/Colors';
 
-import BigButton from '../components/BigButton';
+// import BigButton from '../components/BigButton';
+import {
+  BigButton,
+  Alert,
+  Spinner,
+  FloatingButton,
+} from '../components/common';
 
 import checkAuth from '../hooks/checkAuth';
 import NotLoggedIn from '../components/NotLoggedIn';

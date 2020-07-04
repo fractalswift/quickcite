@@ -5,7 +5,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import NotLoggedIn from '../components/NotLoggedIn';
 import SavedItem from '../components/SavedItem';
-import BigButton from '../components/BigButton';
+// import BigButton from '../components/BigButton';
+import {
+  BigButton,
+  Alert,
+  Spinner,
+  FloatingButton,
+} from '../components/common';
 
 const dummyData = [
   {

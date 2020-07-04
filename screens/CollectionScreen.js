@@ -10,7 +10,12 @@ import {
   Linking,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import FloatingButton from '../components/FloatingButton';
+import {
+  BigButton,
+  Alert,
+  Spinner,
+  FloatingButton,
+} from '../components/common';
 import Colors from '../constants/Colors';
 import Header from '../components/Header';
 

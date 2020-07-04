@@ -4,11 +4,27 @@ import * as WebBrowser from 'expo-web-browser';
 import React, { useState, useEffect } from 'react';
 import { Platform, StyleSheet, Text, View, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import FloatingButton from '../components/FloatingButton';
+import {
+  BigButton,
+  Alert,
+  Spinner,
+  FloatingButton,
+} from '../components/common';
 import Colors from '../constants/Colors';
 import Header from '../components/Header';
-import Spinner from '../components/Spinner';
-import BigButton from '../components/BigButton';
+import {
+  BigButton,
+  Alert,
+  Spinner,
+  FloatingButton,
+} from '../components/common';
+// import BigButton from '../components/BigButton';
+import {
+  BigButton,
+  Alert,
+  Spinner,
+  FloatingButton,
+} from '../components/common';
 
 import axios from 'axios';
 

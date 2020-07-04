@@ -4,8 +4,7 @@ import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import Colors from '../constants/Colors';
 
 import CitationCollection from './CitationCollection';
-
-import FloatingButton from './FloatingButton';
+import { FloatingButton } from '../components/common';
 
 const SavedCitationsList = ({ collectionsList, navigation }) => {
   return (
