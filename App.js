@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import useCachedResources from './hooks/useCachedResources';
