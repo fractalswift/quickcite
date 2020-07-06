@@ -35,7 +35,7 @@ const SavedArticlesList = ({ navigation }) => {
       >
         Press here to refresh
       </Text>
-      <View>
+      <View style={{ marginBottom: 410, paddingBottom: 5 }}>
         <FlatList
           showsHorizontalScrollIndicator={false}
           data={savedArticles}
