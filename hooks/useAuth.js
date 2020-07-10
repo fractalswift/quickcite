@@ -29,6 +29,7 @@ const useAuth = () => {
       } else {
         // No user is signed in.
         console.log('no user is signed in');
+        console.log('useAuth hook says isSignedIn = ', isSignedIn);
         setSignedIn(false);
       }
       unsubscribe();
@@ -39,7 +40,35 @@ const useAuth = () => {
     console.log('calling getUser from useAuth');
     const user = await firebase.auth().currentUser;
     if (user) {
+      console.log('setting user');
       setUser(user);
+    }
+  };
+
+  const signIn = async (email, password) => {
+    try {
+      let response = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email.toString().trim(), password);
+
+      // once we are signed in reset the user object so it is passed down
+      if (response) {
+        console.log('succes, response =', response);
+        getUser();
+        getUserStatus();
+      }
+    } catch (error) {
+      console.log('error signing in:');
+      console.log(error);
+    }
+  };
+
+  const signOut = async () => {
+    console.log('signing out...');
+    let response = firebase.auth().signOut();
+
+    if (response) {
+      getUserStatus();
     }
   };
 
@@ -48,6 +77,8 @@ const useAuth = () => {
     getUser,
     isSignedIn,
     user,
+    signIn,
+    signOut,
   };
 };
 

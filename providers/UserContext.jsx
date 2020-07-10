@@ -6,7 +6,14 @@ import useSaved from '../hooks/useSaved';
 const UserContext = createContext([{}, () => {}]);
 
 const UserProvider = (props) => {
-  const { isSignedIn, getUser, getUserStatus, user } = useAuth();
+  const {
+    isSignedIn,
+    getUser,
+    getUserStatus,
+    user,
+    signOut,
+    signIn,
+  } = useAuth();
 
   const { savedArticles, getSavedArticles } = useSaved();
 
@@ -16,10 +23,12 @@ const UserProvider = (props) => {
       getUser();
       getSavedArticles(user.uid);
     }
-  }, []);
+  }, [isSignedIn]);
 
   return (
-    <UserContext.Provider value={{ isSignedIn, user, savedArticles }}>
+    <UserContext.Provider
+      value={{ isSignedIn, user, savedArticles, signOut, signIn }}
+    >
       {props.children}
     </UserContext.Provider>
   );

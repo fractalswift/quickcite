@@ -1,5 +1,3 @@
-import firebase from 'firebase';
-
 import React, { useEffect, useContext } from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
@@ -9,75 +7,58 @@ import Colors from '../constants/Colors';
 
 import { BigButton } from '../components/common';
 
-import checkAuth from '../hooks/checkAuth';
+import useAuth from '../hooks/useAuth';
 import NotLoggedIn from '../components/NotLoggedIn';
 
-import { UserContext, UserProvider } from '../providers/UserContext';
-
-import Message from './Message';
+import { UserContext } from '../providers/UserContext';
 
 export default function AccountScreen() {
-  const [getUserStatus, isSignedIn] = checkAuth();
+  const { isSignedIn, signOut } = useContext(UserContext);
 
-  const [state, setState] = useContext(UserContext);
+  const { getUserStatus } = useAuth();
 
   useEffect(() => {
-    getUserStatus();
-  }, [isSignedIn, state]);
+    console.log('useEffect in Account Screen called, isSignedIn =', isSignedIn);
+  });
 
-  const signOut = () => {
-    console.log('signing out');
-    firebase.auth().signOut();
-  };
-
-  return (
-    <View style={styles.container}>
-      <ScrollView>
-        <Message />
-        <BigButton
-          label='Change State'
-          icon='md-log-out'
-          onPress={() =>
-            setState((state) => ({ ...state, testState: 'Clicked!' }))
-          }
-          color={Colors.tintColor}
-        />
-        {isSignedIn ? (
-          <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.contentContainer}
-          >
-            <View style={styles.welcomeContainer}>
-              <BigButton
-                label='Sign out'
-                icon='md-log-out'
-                onPress={signOut}
-                color={Colors.tintColor}
-              />
-              <BigButton
-                label='Dark mode'
-                icon='md-moon'
-                color={Colors.tintColor}
-              />
-              <BigButton label='Sync' icon='md-sync' color={Colors.tintColor} />
-              <BigButton
-                label='Security'
-                icon='md-key'
-                color={Colors.tintColor}
-              />
-              <BigButton
-                label='Text size'
-                icon='md-resize'
-                color={Colors.tintColor}
-              />
-            </View>
-          </ScrollView>
-        ) : (
-          <NotLoggedIn screenTitle='account settings' />
-        )}
-      </ScrollView>
-    </View>
-  );
+  if (isSignedIn) {
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <View style={styles.welcomeContainer}>
+            <BigButton
+              label='Sign out'
+              icon='md-log-out'
+              onPress={signOut}
+              color={Colors.tintColor}
+            />
+            <BigButton
+              label='Dark mode'
+              icon='md-moon'
+              color={Colors.tintColor}
+            />
+            <BigButton label='Sync' icon='md-sync' color={Colors.tintColor} />
+            <BigButton
+              label='Security'
+              icon='md-key'
+              color={Colors.tintColor}
+              onPress={getUserStatus}
+            />
+            <BigButton
+              label='Text size'
+              icon='md-resize'
+              color={Colors.tintColor}
+            />
+          </View>
+        </ScrollView>
+      </View>
+    );
+  } else {
+    return <NotLoggedIn screenTitle='settings' />;
+  }
 }
 
 AccountScreen.navigationOptions = {

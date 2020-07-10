@@ -1,8 +1,10 @@
-import firebase from 'firebase';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FormInput from './FormInput';
 import { BigButton, Alert, Spinner } from '../components/common';
+import useAuth from '../hooks/useAuth';
+
+import { UserContext } from '../providers/UserContext';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -10,20 +12,19 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const { signIn } = useContext(UserContext);
+
   // Clean up to avoid memory leak from loading state
   useEffect(() => {
+    console.log('useEffect LoginForm');
     return setLoading(false);
   }, [loading]);
 
   const handleSignIn = async () => {
-    console.log('handle called');
     setLoading(true);
     try {
       console.log('signing in!');
-      let response = await firebase
-        .auth()
-        .signInWithEmailAndPassword(email.toString().trim(), password);
-      console.log(response);
+      signIn(email, password);
       setLoading(false);
     } catch (error) {
       setErrorMessage('SignIn failed - check credentials.');
