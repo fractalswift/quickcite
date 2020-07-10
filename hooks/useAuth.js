@@ -1,6 +1,5 @@
 import firebase from 'firebase';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../providers/AuthContext';
+import { useState } from 'react';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDcPCEfm-rGSYwyaXj-HIzmwZP1_YAKFQ4',
@@ -18,9 +17,8 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
 const useAuth = () => {
-  const [state, setState] = useContext(AuthContext);
-
   const [isSignedIn, setSignedIn] = useState(false);
+  const [user, setUser] = useState('');
 
   const getUserStatus = async () => {
     const unsubscribe = firebase.auth().onAuthStateChanged(function (user) {
@@ -34,65 +32,23 @@ const useAuth = () => {
         setSignedIn(false);
       }
       unsubscribe();
-      setState({ ...state, isLoggedIn: true });
     });
   };
 
   const getUser = async () => {
     console.log('calling getUser from useAuth');
-
-    setState({ ...state, user: auth });
+    const user = await firebase.auth().currentUser;
+    if (user) {
+      setUser(user);
+    }
   };
-
-  // Play a specific track
-  //   function playTrack(index) {
-  //     if (index === state.currentTrackIndex) {
-  //       togglePlay();
-  //     } else {
-  //       setState((state) => ({
-  //         ...state,
-  //         currentTrackIndex: index,
-  //         isPlaying: true,
-  //       }));
-  //     }
-  //   }
-
-  //   // Toggle play or pause
-  //   function togglePlay() {
-  //     setState((state) => ({ ...state, isPlaying: !state.isPlaying }));
-  //   }
-
-  //   // Play the previous track in the tracks array
-  //   function playPreviousTrack() {
-  //     const newIndex =
-  //       (((state.currentTrackIndex + -1) % state.tracks.length) +
-  //         state.tracks.length) %
-  //       state.tracks.length;
-  //     playTrack(newIndex);
-  //   }
-
-  //   // Play the next track in the tracks array
-  //   function playNextTrack() {
-  //     const newIndex = (state.currentTrackIndex + 1) % state.tracks.length;
-  //     playTrack(newIndex);
-  //   }
 
   return {
     getUserStatus,
     getUser,
+    isSignedIn,
+    user,
   };
-
-  //   return {
-  //     playTrack,
-  //     togglePlay,
-  //     currentTrackName:
-  //       state.currentTrackIndex !== null &&
-  //       state.tracks[state.currentTrackIndex].name,
-  //     trackList: state.tracks,
-  //     isPlaying: state.isPlaying,
-  //     playPreviousTrack,
-  //     playNextTrack,
-  //   };
 };
 
 export default useAuth;

@@ -14,7 +14,7 @@ import CollectionScreen from './screens/CollectionScreen';
 
 const Stack = createStackNavigator();
 
-import { AuthContext, AuthProvider } from './providers/AuthContext';
+import { UserContext, UserProvider } from './providers/UserContext';
 
 export default function App(props) {
   const isLoadingComplete = useCachedResources();
@@ -23,7 +23,7 @@ export default function App(props) {
     return null;
   } else {
     return (
-      <AuthProvider>
+      <UserProvider>
         <View style={styles.container}>
           <NavigationContainer linking={LinkingConfiguration}>
             <Stack.Navigator>
@@ -34,7 +34,7 @@ export default function App(props) {
           </NavigationContainer>
           <StatusBar style='auto' />
         </View>
-      </AuthProvider>
+      </UserProvider>
     );
   }
 }

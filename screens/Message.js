@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import { Text, View } from 'react-native';
 
-import { AuthContext } from '../providers/AuthContext';
+import { UserContext } from '../providers/UserContext';
 
 import useAuth from '../hooks/useAuth';
 
 import useSaved from '../hooks/useSaved';
 
 const Message = () => {
-  const [state, setState] = useContext(AuthContext);
+  const [state, setState] = useContext(UserContext);
 
   const { getUserStatus, getUser } = useAuth();
 

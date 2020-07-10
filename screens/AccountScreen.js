@@ -12,14 +12,14 @@ import { BigButton } from '../components/common';
 import checkAuth from '../hooks/checkAuth';
 import NotLoggedIn from '../components/NotLoggedIn';
 
-import { AuthContext, AuthProvider } from '../providers/AuthContext';
+import { UserContext, UserProvider } from '../providers/UserContext';
 
 import Message from './Message';
 
 export default function AccountScreen() {
   const [getUserStatus, isSignedIn] = checkAuth();
 
-  const [state, setState] = useContext(AuthContext);
+  const [state, setState] = useContext(UserContext);
 
   useEffect(() => {
     getUserStatus();

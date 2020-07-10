@@ -1,31 +1,28 @@
 import firebase from 'firebase';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../providers/AuthContext';
+import { useState } from 'react';
 
 const useSaved = () => {
-  const [state, setState] = useContext(AuthContext);
+  const [savedArticles, setSavedArticles] = useState([]);
 
   const getSavedArticles = async (userId) => {
     console.log('calling getSavedArticles from useSaved');
 
-    if (state.user.currentUser) {
-      const articles = await firebase
-        .database()
-        .ref(`users/${state.user.currentUser.uid}/savedArticles`)
-        .once('value');
+    const articles = await firebase
+      .database()
+      .ref(`users/${userId}/savedArticles`)
+      .once('value');
 
-      if (!articles.toJSON()) {
-        setState({ ...state, savedArticles: [] });
-      } else {
-        const updatedArticles = await Object.values(articles.toJSON());
-        setState({ ...state, savedArticles: updatedArticles });
-        console.log(state);
-      }
+    if (!articles.toJSON()) {
+      setSavedArticles([]);
+    } else {
+      const updatedArticles = await Object.values(articles.toJSON());
+      setSavedArticles(updatedArticles);
     }
   };
 
   return {
     getSavedArticles,
+    savedArticles,
   };
 };
 
