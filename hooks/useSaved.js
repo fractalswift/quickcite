@@ -20,6 +20,43 @@ const useSaved = () => {
     }
   };
 
+  const unsaveArticle = async (doi) => {
+    firebase
+      .database()
+      .ref(`users/${currentUser.uid}/savedArticles`)
+      .orderByChild('doi')
+      .equalTo(doi)
+      .once('value', (snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          const key = Object.keys(userData)[0];
+
+          firebase
+            .database()
+            .ref(`users/${currentUser.uid}/savedArticles/${key}`)
+            .remove();
+
+          console.log('deleted');
+          // update the savedArticles state
+          getSavedArticles(currentUser.uid);
+        } else {
+          console.log('not there in the first place');
+        }
+      });
+  };
+
+  // This adds saved article to user profile
+
+  const saveArticle = async (articleDetails) => {
+    const response = await firebase
+      .database()
+      .ref(`users/${currentUser.uid}/savedArticles`)
+      .push(articleDetails);
+
+    // Change the save icon to unsave
+    setIsSaved(true);
+  };
+
   return {
     getSavedArticles,
     savedArticles,

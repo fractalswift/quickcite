@@ -11,6 +11,8 @@ import Header from '../components/Header';
 import useSavedArticles from '../hooks/useSavedArticles';
 import checkAuth from '../hooks/checkAuth';
 
+import { UserContext } from '../providers/UserContext';
+
 export default function ArticleScreen({ route, navigation }) {
   const {
     title,
@@ -70,7 +72,7 @@ export default function ArticleScreen({ route, navigation }) {
 
   // This adds saved article to user profile
 
-  const saveArticle = async () => {
+  const addArticleToUserDb = async () => {
     const record = {
       title,
       doi,
@@ -82,11 +84,7 @@ export default function ArticleScreen({ route, navigation }) {
       url,
     };
 
-    const response = await firebase
-      .database()
-      .ref(`users/${currentUser.uid}/savedArticles`)
-      .push(record);
-
+    saveArticle(record);
     // Change the save icon to unsave
     setIsSaved(true);
   };

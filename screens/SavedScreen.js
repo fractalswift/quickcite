@@ -12,26 +12,39 @@ import useSavedArticles from '../hooks/useSavedArticles';
 import { UserContext, UserProvider } from '../providers/UserContext';
 
 export default function SavedScreen({ navigation }) {
-  const { isSignedIn, user, savedArticles } = useContext(UserContext);
-
-  useEffect(() => {
-    console.log(isSignedIn);
-    console.log(user.uid);
-    console.log(savedArticles);
-  }, [user, savedArticles]);
-
-  return (
-    <View style={styles.container}>
-      <Text>Hello</Text>
-      <Text
-        onPress={() => {
-          setMessage('woooopd');
-        }}
-      >
-        SET MESSAGE TO SOMETHING ELSE
-      </Text>
-    </View>
+  const { isSignedIn, user, savedArticles, unsaveArticle } = useContext(
+    UserContext
   );
+
+  const [page, setPage] = useState('Articles');
+
+  useEffect(() => {}, [user, isSignedIn, savedArticles]);
+
+  if (!isSignedIn) {
+    return <NotLoggedIn screenName='saved articles/citations' />;
+  } else {
+    return (
+      <View>
+        <AllSaved
+          navigation={navigation}
+          page={page}
+          savedArticles={savedArticles}
+          unsaveArticle={unsaveArticle}
+        />
+      </View>
+    );
+  }
+}
+
+{
+  /* <View>
+<AllSaved
+  navigation={navigation}
+  page={page}
+  savedArticles={savedArticles}
+  unsaveArticle={unsaveArticle}
+/>
+</View> */
 }
 
 // export default function SavedScreen({ navigation }) {

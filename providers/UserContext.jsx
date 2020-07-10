@@ -15,7 +15,12 @@ const UserProvider = (props) => {
     signIn,
   } = useAuth();
 
-  const { savedArticles, getSavedArticles } = useSaved();
+  const {
+    savedArticles,
+    getSavedArticles,
+    unsaveArticle,
+    saveArticle,
+  } = useSaved();
 
   useEffect(() => {
     getUserStatus();
@@ -23,11 +28,18 @@ const UserProvider = (props) => {
       getUser();
       getSavedArticles(user.uid);
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, savedArticles]);
 
   return (
     <UserContext.Provider
-      value={{ isSignedIn, user, savedArticles, signOut, signIn }}
+      value={{
+        isSignedIn,
+        user,
+        savedArticles,
+        signOut,
+        signIn,
+        unsaveArticle,
+      }}
     >
       {props.children}
     </UserContext.Provider>

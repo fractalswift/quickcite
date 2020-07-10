@@ -57,5 +57,5 @@ export default () => {
       });
   };
 
-  return [savedArticles, setSavedArticles, getSavedArticles, unsaveArticle];
+  return { savedArticles, setSavedArticles, getSavedArticles, unsaveArticle };
 };
