@@ -12,11 +12,9 @@ import LinkingConfiguration from './navigation/LinkingConfiguration';
 import ArticleScreen from './screens/ArticleScreen';
 import CollectionScreen from './screens/CollectionScreen';
 
-import { firebaseConfig } from './env/firebaseConfig';
-
 const Stack = createStackNavigator();
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+import { AuthContext, AuthProvider } from './providers/AuthContext';
 
 export default function App(props) {
   const isLoadingComplete = useCachedResources();
@@ -25,16 +23,18 @@ export default function App(props) {
     return null;
   } else {
     return (
-      <View style={styles.container}>
-        <NavigationContainer linking={LinkingConfiguration}>
-          <Stack.Navigator>
-            <Stack.Screen name='Root' component={BottomTabNavigator} />
-            <Stack.Screen name='Article' component={ArticleScreen} />
-            <Stack.Screen name='Collection' component={CollectionScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-        <StatusBar style='auto' />
-      </View>
+      <AuthProvider>
+        <View style={styles.container}>
+          <NavigationContainer linking={LinkingConfiguration}>
+            <Stack.Navigator>
+              <Stack.Screen name='Root' component={BottomTabNavigator} />
+              <Stack.Screen name='Article' component={ArticleScreen} />
+              <Stack.Screen name='Collection' component={CollectionScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+          <StatusBar style='auto' />
+        </View>
+      </AuthProvider>
     );
   }
 }

@@ -1,8 +1,8 @@
 import firebase from 'firebase';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import Colors from '../constants/Colors';
@@ -12,12 +12,18 @@ import { BigButton } from '../components/common';
 import checkAuth from '../hooks/checkAuth';
 import NotLoggedIn from '../components/NotLoggedIn';
 
+import { AuthContext, AuthProvider } from '../providers/AuthContext';
+
+import Message from './Message';
+
 export default function AccountScreen() {
   const [getUserStatus, isSignedIn] = checkAuth();
 
+  const [state, setState] = useContext(AuthContext);
+
   useEffect(() => {
     getUserStatus();
-  }, [isSignedIn]);
+  }, [isSignedIn, state]);
 
   const signOut = () => {
     console.log('signing out');
@@ -27,6 +33,15 @@ export default function AccountScreen() {
   return (
     <View style={styles.container}>
       <ScrollView>
+        <Message />
+        <BigButton
+          label='Change State'
+          icon='md-log-out'
+          onPress={() =>
+            setState((state) => ({ ...state, testState: 'Clicked!' }))
+          }
+          color={Colors.tintColor}
+        />
         {isSignedIn ? (
           <ScrollView
             style={styles.container}
