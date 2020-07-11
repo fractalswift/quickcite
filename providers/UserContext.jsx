@@ -30,6 +30,7 @@ const UserProvider = (props) => {
     if (isSignedIn) {
       getUser();
       getSavedArticles(user.uid);
+      getCollections(user.uid);
     }
   }, [isSignedIn, user]);
 

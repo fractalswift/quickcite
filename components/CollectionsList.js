@@ -54,7 +54,7 @@ const CollectionsList = ({ navigation }) => {
         icon={!create ? 'md-add-circle' : 'md-remove-circle'}
         color={!create ? Colors.tintColor : 'crimson'}
         onPress={() => {
-          !create ? setCreate(true) : setCreate(false);
+          setCreate(!create);
         }}
       />
       {create ? (

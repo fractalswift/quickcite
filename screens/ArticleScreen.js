@@ -1,6 +1,13 @@
 import firebase from 'firebase';
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Linking } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Linking,
+  Modal,
+  TouchableHighlight,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
 
@@ -27,16 +34,23 @@ export default function ArticleScreen({ route, navigation }) {
     saveArticle,
     unsaveArticle,
     getSavedArticles,
+    collections,
     user,
   } = useContext(UserContext);
 
+  // defualt to "loading article" while loading
   const [article, setArticle] = useState([
     { format: 'title', content: 'Loading article...' },
   ]);
 
+  // control spinner state for loading article
   const [loading, setLoading] = useState(true);
 
+  // control the state of the save/unsave button
   const [isSaved, setIsSaved] = useState(false);
+
+  // control state of citation modal
+  const [modalVisible, setModalVisible] = useState(false);
 
   const getArticle = async (doi) => {
     const response = await axios.get(
@@ -91,6 +105,39 @@ export default function ArticleScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <Header />
+
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>
+              Choose collection to add citation.
+            </Text>
+
+            <View>
+              {collections.map((collection) => {
+                return <Text>{collection.title}</Text>;
+              })}
+            </View>
+
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>Cancel</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+
       <View style={styles.topButtons}>
         {isSaved ? (
           <FloatingButton
@@ -114,7 +161,9 @@ export default function ArticleScreen({ route, navigation }) {
           color='violet'
           name='cite'
           icon='md-quote'
-          onPress={() => checkIfArticleSaved()}
+          onPress={() => {
+            setModalVisible(true);
+          }}
         />
         <FloatingButton
           color='palegoldenrod'
@@ -236,4 +285,40 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   authors: { marginBottom: 10, textAlign: 'center' },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: '#F194FF',
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
 });
