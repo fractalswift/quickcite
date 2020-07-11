@@ -12,9 +12,7 @@ import SavedItem from './SavedItem';
 import { UserContext } from '../providers/UserContext';
 
 const SavedArticlesList = ({ navigation }) => {
-  const { savedArticles, unsaveArticle, getSavedArticles, user } = useContext(
-    UserContext
-  );
+  const { savedArticles, unsaveArticle, user } = useContext(UserContext);
 
   // TODO re-render every time savedArticles is updated
   useEffect(() => {}, [savedArticles]);

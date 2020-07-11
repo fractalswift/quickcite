@@ -3,9 +3,6 @@ import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import NotLoggedIn from '../components/NotLoggedIn';
 
 import Selector from '../components/Selector';
-import AllSaved from '../components/AllSaved';
-
-import useSavedArticles from '../hooks/useSavedArticles';
 
 import SavedArticlesList from '../components/SavedArticlesList';
 
@@ -24,7 +21,7 @@ export default function SavedScreen({ navigation }) {
   } else {
     return (
       <View>
-        <SavedArticlesList />
+        <SavedArticlesList navigation={navigation} />
       </View>
     );
   }
