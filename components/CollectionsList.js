@@ -8,24 +8,44 @@ import { FloatingButton } from '../components/common';
 
 import UserContext from '../providers/UserContext';
 
-const SavedCitationsList = ({ navigation }) => {
-  const { savedArticles, unsaveArticle, user } = useContext(UserContext);
+const collections = [
+  {
+    title: 'dummy collection',
+    uid: '12344',
+    doi: 'dhfwhfeefsdfw33ury',
+    citations: ['judo article', 'karate article'],
+  },
+  {
+    title: 'another collection',
+    uid: '12544',
+    doi: 'dhfwhfeury',
+    citations: ['dog article', 'cat article'],
+  },
+];
+
+const CollectionsList = ({ navigation }) => {
+  //   const {  createCollection, deleteCollection, user } = useContext(
+  //     UserContext
+  //   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.articleCount}>You have 7 citation collections.</Text>
+      <Text style={styles.articleCount}>
+        You have {collections.length || 0} citation collections.
+      </Text>
       <FloatingButton
         name='Create'
         icon='md-add-circle'
         color={Colors.tintColor}
       />
       <ScrollView>
-        {collectionsList.map((article) => {
+        {collections.map((collection) => {
           return (
             <CitationCollection
-              articleTitle={article.title}
-              doi={article.doi}
-              key={article.identifier}
+              title={collection.title}
+              uid={collection.uid}
+              doi={collection.doi}
+              key={collection.uid}
               navigation={navigation}
             />
           );
@@ -45,4 +65,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default SavedCitationsList;
+export default CollectionsList;

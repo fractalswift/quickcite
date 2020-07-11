@@ -5,7 +5,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import AccountScreen from '../screens/AccountScreen';
 import SavedScreen from '../screens/SavedScreen';
 import SearchScreen from '../screens/SearchScreen';
-import HistoryScreen from '../screens/HistoryScreen';
+import CitationsScreen from '../screens/CitationsScreen';
 import Header from '../components/Header';
 
 const BottomTab = createBottomTabNavigator();
@@ -43,16 +43,16 @@ export default function BottomTabNavigator({ navigation, route }) {
             ),
           }}
         />
-        {/* <BottomTab.Screen
-          name='History'
-          component={HistoryScreen}
+        <BottomTab.Screen
+          name='Citations'
+          component={CitationsScreen}
           options={{
-            title: 'History',
+            title: 'Citations',
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon focused={focused} name='md-time' />
+              <TabBarIcon focused={focused} name='md-quote' />
             ),
           }}
-        /> */}
+        />
         <BottomTab.Screen
           name='Account'
           component={AccountScreen}

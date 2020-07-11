@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import NotLoggedIn from '../components/NotLoggedIn';
 
-import SavedArticlesList from '../components/SavedArticlesList';
+import CollectionsList from '../components/CollectionsList';
 
 import { UserContext } from '../providers/UserContext';
 
@@ -12,11 +12,11 @@ export default function SavedScreen({ navigation }) {
   useEffect(() => {}, [user, isSignedIn]);
 
   if (!isSignedIn) {
-    return <NotLoggedIn screenName='saved articles' />;
+    return <NotLoggedIn screenName='citation collections' />;
   } else {
     return (
       <View>
-        <SavedArticlesList navigation={navigation} />
+        <CollectionsList navigation={navigation} />
       </View>
     );
   }

@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   articleCount: {
     fontSize: 16,
     marginTop: 15,
+    marginBottom: 15,
     textAlign: 'center',
   },
 });

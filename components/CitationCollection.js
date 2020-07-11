@@ -3,19 +3,19 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FloatingButton } from './common';
 import Colors from '../constants/Colors';
 
-const CitationCollection = ({ articleTitle, doi, navigation }) => {
+const CitationCollection = ({ title, doi, navigation }) => {
   return (
     <TouchableOpacity
       style={styles.box}
-      onPress={() =>
-        navigation.navigate('Collection', {
-          collectionTitle: articleTitle,
-        })
-      }
+      // onPress={() =>
+      //   navigation.navigate('Collection', {
+      //     collectionTitle: title,
+      //   })
+      // }
     >
       <View style={styles.articleTitle}>
         <Text style={{ fontWeight: 'bold', fontSize: 18 }} t>
-          {articleTitle.slice(0, 170)}...
+          {title.slice(0, 170)}...
         </Text>
       </View>
       <View style={styles.buttons}>
