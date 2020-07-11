@@ -39,6 +39,8 @@ const useCitations = () => {
       getCollections(userId);
     } else {
       // TODO return an error to the user
+      // update the collections state
+      getCollections(userId);
     }
   };
 

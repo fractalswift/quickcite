@@ -58,24 +58,26 @@ const CollectionsList = ({ navigation }) => {
         }}
       />
       {create ? (
-        <View style={styles.newCollection}>
-          <FormInput
-            label='Name'
-            value={newColName}
-            onChangeText={setNewColName}
-            placeholder={'New collection title...'}
-          />
-          <BigButton
-            label='Save'
-            icon='md-save'
-            color={Colors.tintColor}
-            onPress={() => {
-              saveNewCollection();
-            }}
-          />
-        </View>
+        <>
+          <View style={styles.newCollection}>
+            <FormInput
+              label='Name'
+              value={newColName}
+              onChangeText={setNewColName}
+              placeholder={'New collection title...'}
+            />
+            <FloatingButton
+              name='Save'
+              icon='md-save'
+              color={Colors.tintColor}
+              onPress={() => {
+                saveNewCollection();
+              }}
+            />
+          </View>
+        </>
       ) : null}
-      <ScrollView>
+      <ScrollView style={styles.collectionsList}>
         {collections.map((collection) => {
           return (
             <CitationCollection
@@ -102,8 +104,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   newCollection: {
-    height: 200,
+    height: 50,
+    flexDirection: 'row',
     justifyContent: 'flex-start',
+    marginBottom: 40,
+    paddingRight: 20,
+    alignItems: 'center',
+  },
+  collectionsList: {
+    marginBottom: 230,
+    paddingBottom: 20,
   },
 });
 export default CollectionsList;
