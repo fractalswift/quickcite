@@ -7,6 +7,7 @@ import {
   Linking,
   Modal,
   TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
@@ -34,6 +35,7 @@ export default function ArticleScreen({ route, navigation }) {
     saveArticle,
     unsaveArticle,
     getSavedArticles,
+    saveCitation,
     collections,
     user,
   } = useContext(UserContext);
@@ -95,6 +97,10 @@ export default function ArticleScreen({ route, navigation }) {
     setIsSaved(true);
   };
 
+  const addCitationToCollection = async () => {
+    saveCitation('citation', 'Trees', user.uid);
+  };
+
   useEffect(() => {
     getArticle(doi);
     checkIfArticleSaved();
@@ -117,12 +123,22 @@ export default function ArticleScreen({ route, navigation }) {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>
-              Choose collection to add citation.
+              Choose collection to add citation:
             </Text>
 
             <View>
               {collections.map((collection) => {
-                return <Text>{collection.title}</Text>;
+                return (
+                  <TouchableOpacity
+                    style={styles.collection}
+                    onPress={() => addCitationToCollection()}
+                  >
+                    <Text style={{ fontWeight: 'bold' }}>
+                      {collection.title}
+                    </Text>
+                    <Text style={{ fontWeight: 'bold' }}>+</Text>
+                  </TouchableOpacity>
+                );
               })}
             </View>
 
@@ -320,5 +336,14 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  collection: {
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'skyblue',
+    padding: 5,
+    borderRadius: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

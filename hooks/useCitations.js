@@ -44,9 +44,28 @@ const useCitations = () => {
     }
   };
 
+  const saveCitation = async (newCitation, collectionTitle, userId) => {
+    console.log('calling saveCitation from useCitations');
+    // TODO first check the citation is not already in the collection is not already used
+    const targetCollection = collections.filter((collection) => {
+      return collection.title === collectionTitle;
+    });
+
+    const response = await firebase
+      .database()
+      .ref(`users/${userId}/citationCollections/-MByBf9V40nj4CkTV5qf/citations`)
+      .push(newCitation);
+
+    // reset collections state
+    getCollections(userId);
+
+    console.log(targetCollection);
+  };
+
   return {
     getCollections,
     createCollection,
+    saveCitation,
     collections,
   };
 };

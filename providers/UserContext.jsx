@@ -23,7 +23,12 @@ const UserProvider = (props) => {
     saveArticle,
   } = useSaved();
 
-  const { collections, getCollections, createCollection } = useCitations();
+  const {
+    collections,
+    getCollections,
+    createCollection,
+    saveCitation,
+  } = useCitations();
 
   useEffect(() => {
     getUserStatus();
@@ -48,6 +53,7 @@ const UserProvider = (props) => {
         collections,
         createCollection,
         getCollections,
+        saveCitation,
       }}
     >
       {props.children}
