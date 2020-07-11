@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
 
 import Colors from '../constants/Colors';
 
 import CitationCollection from './CitationCollection';
-import { FloatingButton } from '../components/common';
+import { FloatingButton, BigButton } from '../components/common';
+import FormInput from '../components/FormInput';
 
-import UserContext from '../providers/UserContext';
+import { UserContext } from '../providers/UserContext';
 
-const collections = [
+const dummyCollections = [
   {
     title: 'dummy collection',
     uid: '12344',
@@ -24,9 +25,24 @@ const collections = [
 ];
 
 const CollectionsList = ({ navigation }) => {
-  //   const {  createCollection, deleteCollection, user } = useContext(
-  //     UserContext
-  //   );
+  const { collections, createCollection, user } = useContext(UserContext);
+
+  // state for making the "new collection" box visible not
+  const [create, setCreate] = useState(false);
+
+  const [newColName, setNewColName] = useState('');
+
+  const saveNewCollection = () => {
+    const newCollection = {
+      title: newColName,
+      citations: [],
+    };
+    createCollection(newCollection, user.uid);
+    setCreate(false);
+    console.log('created collection');
+  };
+
+  useEffect(() => {}, [create, collections, user]);
 
   return (
     <View style={styles.container}>
@@ -34,10 +50,31 @@ const CollectionsList = ({ navigation }) => {
         You have {collections.length || 0} citation collections.
       </Text>
       <FloatingButton
-        name='Create'
-        icon='md-add-circle'
-        color={Colors.tintColor}
+        name={!create ? 'Create' : 'Cancel'}
+        icon={!create ? 'md-add-circle' : 'md-remove-circle'}
+        color={!create ? Colors.tintColor : 'crimson'}
+        onPress={() => {
+          !create ? setCreate(true) : setCreate(false);
+        }}
       />
+      {create ? (
+        <View style={styles.newCollection}>
+          <FormInput
+            label='Name'
+            value={newColName}
+            onChangeText={setNewColName}
+            placeholder={'New collection title...'}
+          />
+          <BigButton
+            label='Save'
+            icon='md-save'
+            color={Colors.tintColor}
+            onPress={() => {
+              saveNewCollection();
+            }}
+          />
+        </View>
+      ) : null}
       <ScrollView>
         {collections.map((collection) => {
           return (
@@ -63,6 +100,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 15,
     textAlign: 'center',
+  },
+  newCollection: {
+    height: 200,
+    justifyContent: 'flex-start',
   },
 });
 export default CollectionsList;

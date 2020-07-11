@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 
 import useAuth from '../hooks/useAuth';
 import useSaved from '../hooks/useSaved';
+import useCitations from '../hooks/useCitations';
 
 const UserContext = createContext([{}, () => {}]);
 
@@ -22,6 +23,8 @@ const UserProvider = (props) => {
     saveArticle,
   } = useSaved();
 
+  const { collections, getCollections, createCollection } = useCitations();
+
   useEffect(() => {
     getUserStatus();
     if (isSignedIn) {
@@ -41,6 +44,9 @@ const UserProvider = (props) => {
         saveArticle,
         unsaveArticle,
         getSavedArticles,
+        collections,
+        createCollection,
+        getCollections,
       }}
     >
       {props.children}
