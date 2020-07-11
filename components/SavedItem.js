@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FloatingButton } from './common';
 import Colors from '../constants/Colors';
 
-const SavedItem = ({ articleTitle, doi, unsaveArticle, navigate }) => {
+const SavedItem = ({ articleTitle, doi, unsaveArticle, user }) => {
   return (
     <View style={styles.box}>
       <View style={styles.articleTitle}>
@@ -25,7 +25,7 @@ const SavedItem = ({ articleTitle, doi, unsaveArticle, navigate }) => {
           icon='md-remove-circle-outline'
           color='crimson'
           onPress={() => {
-            unsaveArticle(doi);
+            unsaveArticle(user.uid, doi);
           }}
         />
       </View>
@@ -42,8 +42,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '89%',
     marginLeft: 20,
-    marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 20,
     paddingRight: 20,
     elevation: 10,
     backgroundColor: 'whitesmoke',

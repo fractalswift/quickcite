@@ -20,10 +20,10 @@ const useSaved = () => {
     }
   };
 
-  const unsaveArticle = async (doi) => {
+  const unsaveArticle = async (userId, doi) => {
     firebase
       .database()
-      .ref(`users/${currentUser.uid}/savedArticles`)
+      .ref(`users/${userId}/savedArticles`)
       .orderByChild('doi')
       .equalTo(doi)
       .once('value', (snapshot) => {
@@ -33,12 +33,12 @@ const useSaved = () => {
 
           firebase
             .database()
-            .ref(`users/${currentUser.uid}/savedArticles/${key}`)
+            .ref(`users/${userId}/savedArticles/${key}`)
             .remove();
 
           console.log('deleted');
           // update the savedArticles state
-          getSavedArticles(currentUser.uid);
+          getSavedArticles(userId);
         } else {
           console.log('not there in the first place');
         }
@@ -47,18 +47,20 @@ const useSaved = () => {
 
   // This adds saved article to user profile
 
-  const saveArticle = async (articleDetails) => {
+  const saveArticle = async (articleDetails, userId) => {
     const response = await firebase
       .database()
-      .ref(`users/${currentUser.uid}/savedArticles`)
+      .ref(`users/${userId}/savedArticles`)
       .push(articleDetails);
 
-    // Change the save icon to unsave
-    setIsSaved(true);
+    // update the savedArticles state
+    getSavedArticles(userId);
   };
 
   return {
     getSavedArticles,
+    saveArticle,
+    unsaveArticle,
     savedArticles,
   };
 };

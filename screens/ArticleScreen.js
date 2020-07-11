@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
@@ -7,9 +7,6 @@ import axios from 'axios';
 import { BigButton, Spinner, FloatingButton } from '../components/common';
 import Colors from '../constants/Colors';
 import Header from '../components/Header';
-
-import useSavedArticles from '../hooks/useSavedArticles';
-import checkAuth from '../hooks/checkAuth';
 
 import { UserContext } from '../providers/UserContext';
 
@@ -25,6 +22,14 @@ export default function ArticleScreen({ route, navigation }) {
     abstract,
   } = route.params;
 
+  const {
+    savedArticles,
+    saveArticle,
+    unsaveArticle,
+    getSavedArticles,
+    user,
+  } = useContext(UserContext);
+
   const [article, setArticle] = useState([
     { format: 'title', content: 'Loading article...' },
   ]);
@@ -32,15 +37,6 @@ export default function ArticleScreen({ route, navigation }) {
   const [loading, setLoading] = useState(true);
 
   const [isSaved, setIsSaved] = useState(false);
-
-  const [getUserStatus, isSignedIn, currentUser] = checkAuth();
-
-  const [
-    savedArticles,
-    setSavedArticles,
-    getSavedArticles,
-    unsaveArticle,
-  ] = useSavedArticles();
 
   const getArticle = async (doi) => {
     const response = await axios.get(
@@ -51,27 +47,23 @@ export default function ArticleScreen({ route, navigation }) {
     setLoading(false);
   };
 
-  // check if current article already exists in user'db
+  // check if current article already exists in user's db
+  // TODO - refactor to use includes ?
   const checkIfArticleSaved = async () => {
-    firebase
-      .database()
-      .ref(`users/${currentUser.uid}/savedArticles`)
-      .orderByChild('doi')
-      .equalTo(doi)
-      .once('value', (snapshot) => {
-        if (snapshot.exists()) {
-          const userData = snapshot.val();
-          setIsSaved(true);
-          console.log('it is saved');
-        } else {
-          setIsSaved(false);
-          console.log('it is not saved');
-        }
-      });
+    const matchingDoi = savedArticles.filter((article) => {
+      return article.doi === doi;
+    });
+
+    if (matchingDoi.length) {
+      setIsSaved(true);
+    } else {
+      setIsSaved(false);
+    }
   };
 
   // This adds saved article to user profile
 
+  // TODO move setIsSaved to be based in useEffect so we know article IS saved
   const addArticleToUserDb = async () => {
     const record = {
       title,
@@ -84,7 +76,7 @@ export default function ArticleScreen({ route, navigation }) {
       url,
     };
 
-    saveArticle(record);
+    saveArticle(record, user.uid);
     // Change the save icon to unsave
     setIsSaved(true);
   };
@@ -92,10 +84,9 @@ export default function ArticleScreen({ route, navigation }) {
   useEffect(() => {
     getArticle(doi);
     checkIfArticleSaved();
-    getSavedArticles(currentUser.uid);
 
     return setArticle(article);
-  }, [isSaved, currentUser]);
+  }, [savedArticles, user]);
 
   return (
     <View style={styles.container}>
@@ -107,9 +98,7 @@ export default function ArticleScreen({ route, navigation }) {
             name='unsave'
             icon='md-close-circle-outline'
             onPress={() => {
-              unsaveArticle(doi);
-              setIsSaved(false);
-              getSavedArticles(currentUser.uid);
+              unsaveArticle(user.uid, doi);
             }}
           />
         ) : (
@@ -117,7 +106,7 @@ export default function ArticleScreen({ route, navigation }) {
             color='skyblue'
             name='save'
             icon='md-save'
-            onPress={() => saveArticle()}
+            onPress={() => addArticleToUserDb()}
           />
         )}
 

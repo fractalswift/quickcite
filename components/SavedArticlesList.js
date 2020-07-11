@@ -1,6 +1,4 @@
-import checkAuth from '../hooks/checkAuth';
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   Text,
   View,
@@ -10,18 +8,15 @@ import {
 } from 'react-native';
 
 import SavedItem from './SavedItem';
-import useSavedArticles from '../hooks/useSavedArticles';
+
+import { UserContext } from '../providers/UserContext';
 
 const SavedArticlesList = ({ navigation }) => {
-  const [getUserStatus, isSignedIn, currentUser] = checkAuth();
+  const { savedArticles, unsaveArticle, getSavedArticles, user } = useContext(
+    UserContext
+  );
 
-  const [
-    savedArticles,
-    setSavedArticles,
-    getSavedArticles,
-    unsaveArticle,
-  ] = useSavedArticles();
-
+  // TODO re-render every time savedArticles is updated
   useEffect(() => {}, [savedArticles]);
 
   return (
@@ -29,44 +24,38 @@ const SavedArticlesList = ({ navigation }) => {
       <Text style={styles.articleCount}>
         You have {savedArticles.length || 0} saved articles.
       </Text>
-      <Text
-        style={styles.articleCount}
-        onPress={() => getSavedArticles(currentUser.uid)}
-      >
-        Press here to refresh
-      </Text>
-      <View style={{ marginBottom: 410, paddingBottom: 5 }}>
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          data={savedArticles}
-          keyExtractor={(result) => result.identifier}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('Article', {
-                    abstract: item.abstract,
-                    title: item.title,
-                    authors: Object.values(item.authors),
-                    pubDate: item.publicationDate,
-                    pubName: item.publicationName,
-                    url: item.url[0].value,
-                    doi: item.doi,
-                    identifier: item.identifier,
-                  })
-                }
-              >
-                <SavedItem
-                  articleTitle={item.title}
-                  doi={item.doi}
-                  key={item.identifier}
-                  unsaveArticle={unsaveArticle}
-                />
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
+      <FlatList
+        style={{ marginBottom: 80 }}
+        showsHorizontalScrollIndicator={false}
+        data={savedArticles}
+        keyExtractor={(result) => result.identifier}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Article', {
+                  abstract: item.abstract,
+                  title: item.title,
+                  authors: Object.values(item.authors),
+                  pubDate: item.publicationDate,
+                  pubName: item.publicationName,
+                  url: item.url[0].value,
+                  doi: item.doi,
+                  identifier: item.identifier,
+                })
+              }
+            >
+              <SavedItem
+                articleTitle={item.title}
+                doi={item.doi}
+                key={item.identifier}
+                unsaveArticle={unsaveArticle}
+                user={user}
+              />
+            </TouchableOpacity>
+          );
+        }}
+      />
     </View>
   );
 };

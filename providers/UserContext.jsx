@@ -28,7 +28,7 @@ const UserProvider = (props) => {
       getUser();
       getSavedArticles(user.uid);
     }
-  }, [isSignedIn, savedArticles]);
+  }, [isSignedIn, user]);
 
   return (
     <UserContext.Provider
@@ -38,7 +38,9 @@ const UserProvider = (props) => {
         savedArticles,
         signOut,
         signIn,
+        saveArticle,
         unsaveArticle,
+        getSavedArticles,
       }}
     >
       {props.children}

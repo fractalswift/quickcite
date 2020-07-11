@@ -1,5 +1,3 @@
-import checkAuth from '../hooks/checkAuth';
-
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import NotLoggedIn from '../components/NotLoggedIn';
@@ -9,42 +7,27 @@ import AllSaved from '../components/AllSaved';
 
 import useSavedArticles from '../hooks/useSavedArticles';
 
-import { UserContext, UserProvider } from '../providers/UserContext';
+import SavedArticlesList from '../components/SavedArticlesList';
+
+import { UserContext } from '../providers/UserContext';
 
 export default function SavedScreen({ navigation }) {
-  const { isSignedIn, user, savedArticles, unsaveArticle } = useContext(
-    UserContext
-  );
+  const { isSignedIn, user } = useContext(UserContext);
 
   const [page, setPage] = useState('Articles');
 
-  useEffect(() => {}, [user, isSignedIn, savedArticles]);
+  // TODO put re render for choosign citations or articles
+  useEffect(() => {}, [user, isSignedIn]);
 
   if (!isSignedIn) {
     return <NotLoggedIn screenName='saved articles/citations' />;
   } else {
     return (
       <View>
-        <AllSaved
-          navigation={navigation}
-          page={page}
-          savedArticles={savedArticles}
-          unsaveArticle={unsaveArticle}
-        />
+        <SavedArticlesList />
       </View>
     );
   }
-}
-
-{
-  /* <View>
-<AllSaved
-  navigation={navigation}
-  page={page}
-  savedArticles={savedArticles}
-  unsaveArticle={unsaveArticle}
-/>
-</View> */
 }
 
 // export default function SavedScreen({ navigation }) {
