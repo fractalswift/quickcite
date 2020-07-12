@@ -1,28 +1,19 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 
 import Colors from '../constants/Colors';
 
 import CitationCollection from './CitationCollection';
-import { FloatingButton, BigButton } from '../components/common';
+import { FloatingButton } from '../components/common';
 import FormInput from '../components/FormInput';
 
 import { UserContext } from '../providers/UserContext';
-
-const dummyCollections = [
-  {
-    title: 'dummy collection',
-    uid: '12344',
-    doi: 'dhfwhfeefsdfw33ury',
-    citations: ['judo article', 'karate article'],
-  },
-  {
-    title: 'another collection',
-    uid: '12544',
-    doi: 'dhfwhfeury',
-    citations: ['dog article', 'cat article'],
-  },
-];
 
 const CollectionsList = ({ navigation }) => {
   const { collections, createCollection, deleteCollection, user } = useContext(
@@ -45,64 +36,112 @@ const CollectionsList = ({ navigation }) => {
   };
 
   useEffect(() => {
-    console.log('CL useeffect:', Object.entries(collections.toJSON()));
+    console.log('COLL:', collections);
+    console.log(collections.length ? 'truthy' : 'falsy');
   }, [create, collections, user]);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.articleCount}>
-        You have {Object.keys(collections.toJSON()).length || 0} citation
-        collections.
-      </Text>
-      <FloatingButton
-        name={!create ? 'Create' : 'Cancel'}
-        icon={!create ? 'md-add-circle' : 'md-remove-circle'}
-        color={!create ? Colors.tintColor : 'crimson'}
-        onPress={() => {
-          setCreate(!create);
-        }}
-      />
-      {create ? (
-        <>
-          <View style={styles.newCollection}>
-            <FormInput
-              label='Name'
-              value={newColName}
-              onChangeText={setNewColName}
-              placeholder={'New collection title...'}
-            />
-            <FloatingButton
-              name='Save'
-              icon='md-save'
-              color={Colors.tintColor}
-              onPress={() => {
-                saveNewCollection();
-              }}
-            />
-          </View>
-        </>
-      ) : null}
-      <ScrollView style={styles.collectionsList}>
-        {Object.entries(collections.toJSON()).map((collection) => {
-          return (
-            <CitationCollection
-              title={collection[1].title}
-              key={collection[1].title}
-              navigation={navigation}
-              deleteCollection={() => {
-                deleteCollection(user.uid, collection[0]);
-              }}
-              count={
-                collection[1].citations
-                  ? Object.values(collection[1].citations).length
-                  : 0
-              }
-            />
-          );
-        })}
-      </ScrollView>
-    </View>
-  );
+  if (!Object.keys(collections).length) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.articleCount}>
+          You have no citation collections.
+        </Text>
+        <FloatingButton
+          name={!create ? 'Create' : 'Cancel'}
+          icon={!create ? 'md-add-circle' : 'md-remove-circle'}
+          color={!create ? Colors.tintColor : 'crimson'}
+          onPress={() => {
+            setCreate(!create);
+          }}
+        />
+        {create ? (
+          <>
+            <View style={styles.newCollection}>
+              <FormInput
+                label='Name'
+                value={newColName}
+                onChangeText={setNewColName}
+                placeholder={'New collection title...'}
+              />
+              <FloatingButton
+                name='Save'
+                icon='md-save'
+                color={Colors.tintColor}
+                onPress={() => {
+                  saveNewCollection();
+                }}
+              />
+            </View>
+          </>
+        ) : null}
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.articleCount}>
+          You have {Object.keys(collections.toJSON()).length || 0} citation
+          collections.
+        </Text>
+        <FloatingButton
+          name={!create ? 'Create' : 'Cancel'}
+          icon={!create ? 'md-add-circle' : 'md-remove-circle'}
+          color={!create ? Colors.tintColor : 'crimson'}
+          onPress={() => {
+            setCreate(!create);
+          }}
+        />
+        {create ? (
+          <>
+            <View style={styles.newCollection}>
+              <FormInput
+                label='Name'
+                value={newColName}
+                onChangeText={setNewColName}
+                placeholder={'New collection title...'}
+              />
+              <FloatingButton
+                name='Save'
+                icon='md-save'
+                color={Colors.tintColor}
+                onPress={() => {
+                  saveNewCollection();
+                }}
+              />
+            </View>
+          </>
+        ) : null}
+        <ScrollView style={styles.collectionsList}>
+          {Object.entries(collections.toJSON()).map((collection) => {
+            return (
+              <TouchableOpacity
+                key={collection[1].title}
+                onPress={() =>
+                  navigation.navigate('Collection', {
+                    title: collection[1].title,
+                    citations: collection[1].citations,
+                  })
+                }
+              >
+                <CitationCollection
+                  title={collection[1].title}
+                  key={collection[1].title}
+                  deleteCollection={deleteCollection}
+                  user={user}
+                  collection={collection}
+                  count={
+                    collection[1].citations
+                      ? Object.values(collection[1].citations).length
+                      : 0
+                  }
+                />
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

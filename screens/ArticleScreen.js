@@ -130,7 +130,7 @@ export default function ArticleScreen({ route, navigation }) {
 
             <View>
               {Object.entries(collections.toJSON()).map((collection) => {
-                const citation = { title, doi };
+                const citation = { authors, pubDate, title, pubName, doi };
                 return (
                   <TouchableOpacity
                     style={styles.collection}

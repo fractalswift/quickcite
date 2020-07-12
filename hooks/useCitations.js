@@ -4,6 +4,9 @@ import { useState } from 'react';
 const useCitations = () => {
   const [collections, setCollections] = useState([]);
 
+  // workaround for triggering re-render (see createCollection function)
+  const [trigger, setTrigger] = useState(false);
+
   const getCollections = async (userId) => {
     console.log('calling getCollecitons from useCitations');
 
@@ -54,12 +57,15 @@ const useCitations = () => {
 
     const response = await firebase
       .database()
-      .ref(`users/${userId}/citationCollections/${collectionId}`)
+      .ref(`users/${userId}/citationCollections/${collectionId}/citations`)
       .push(newCitation)
       .catch(console.log());
 
     // reset collections state
     getCollections(userId);
+    // Work around to trigger re-render of collections since calling getCollections
+    // doesn't do this as might expect
+    setTrigger(!trigger);
   };
 
   const deleteCollection = async (userId, collectionId) => {

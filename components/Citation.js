@@ -3,25 +3,35 @@ import { View, Text, StyleSheet } from 'react-native';
 import { FloatingButton } from './common';
 import Colors from '../constants/Colors';
 
-const SavedItem = ({ articleTitle, doi, unsaveArticle, user }) => {
+const SavedItem = ({
+  articleTitle,
+  authors,
+  pubDate,
+  doi,
+  deleteCitation,
+  user,
+}) => {
+  console.log(authors);
+
   return (
     <View style={styles.box}>
       <View style={styles.articleTitle}>
         <Text style={{ fontWeight: 'bold', fontSize: 18 }} t>
           {articleTitle.slice(0, 170)}...
         </Text>
+        <Text>{pubDate}</Text>
+        {Object.values(authors).map((author) => (
+          <Text>{author.creator}</Text>
+        ))}
       </View>
       <View style={styles.buttons}>
         <FloatingButton
-          name='cite'
-          icon='md-quote'
           color={Colors.tintColor}
-          onPress={() => {
-            console.log('pressed cite');
-          }}
+          name='export'
+          icon='md-arrow-round-forward'
         />
         <FloatingButton
-          name='unsave'
+          name='delete'
           icon='md-remove-circle-outline'
           color='crimson'
           onPress={() => {

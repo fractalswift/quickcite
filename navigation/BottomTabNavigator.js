@@ -83,5 +83,7 @@ function getHeaderTitle(route) {
       return 'Read article';
     case 'Citations':
       return 'Saved citations';
+    case 'Collection':
+      return 'Collection citations';
   }
 }

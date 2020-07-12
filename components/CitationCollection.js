@@ -1,19 +1,20 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { FloatingButton } from './common';
 import Colors from '../constants/Colors';
-import CollectionsList from './CollectionsList';
 
-const CitationCollection = ({ title, count, navigation, deleteCollection }) => {
+const CitationCollection = ({
+  title,
+  count,
+  navigation,
+  deleteCollection,
+  user,
+  collection,
+}) => {
+  useEffect(() => {}, [count, collection]);
+
   return (
-    <TouchableOpacity
-      style={styles.box}
-      // onPress={() =>
-      //   navigation.navigate('Collection', {
-      //     collectionTitle: title,
-      //   })
-      // }
-    >
+    <View style={styles.box}>
       <View style={styles.articleTitle}>
         <Text style={{ fontWeight: 'bold', fontSize: 18 }} t>
           {title.slice(0, 170)}...
@@ -30,10 +31,12 @@ const CitationCollection = ({ title, count, navigation, deleteCollection }) => {
           name='delete'
           icon='md-remove-circle-outline'
           color='crimson'
-          onPress={deleteCollection}
+          onPress={() => {
+            deleteCollection(user.uid, collection[0]);
+          }}
         />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

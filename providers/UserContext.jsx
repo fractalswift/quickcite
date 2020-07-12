@@ -29,6 +29,7 @@ const UserProvider = (props) => {
     createCollection,
     saveCitation,
     deleteCollection,
+    trigger,
   } = useCitations();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ const UserProvider = (props) => {
       getSavedArticles(user.uid);
       getCollections(user.uid);
     }
-  }, [isSignedIn, user]);
+  }, [isSignedIn, user, trigger]);
 
   return (
     <UserContext.Provider

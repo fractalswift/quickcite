@@ -1,30 +1,42 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { FloatingButton } from '../components/common';
+import { BigButton } from '../components/common';
 import Colors from '../constants/Colors';
 import Header from '../components/Header';
+import Citation from '../components/Citation';
 
 export default function CollectionScreen({ route, navigation }) {
-  const collectionTitle = route.params.collectiontitle;
+  const title = route.params.title;
   const citations = route.params.citations;
+
+  useEffect(() => {
+    console.log(route.params);
+  });
 
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.topButtons}>
-        <FloatingButton
-          color='skyblue'
-          name='export all'
+        <BigButton
+          color={Colors.tintColor}
+          label='export all'
           icon='md-arrow-round-forward'
         />
-        <FloatingButton color='violet' name='format' icon='md-quote' />
       </View>
 
-      <ScrollView
-        style={styles.articleContainer}
-        contentContainerStyle={styles.contentContainer}
-      ></ScrollView>
+      <ScrollView>
+        {Object.values(citations).map((citation) => {
+          return (
+            <Citation
+              articleTitle={citation.title}
+              pubDate={citation.pubDate}
+              doi={citation.doi}
+              authors={citation.authors}
+            />
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }
@@ -45,9 +57,10 @@ const styles = StyleSheet.create({
 
   topButtons: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     marginBottom: 20,
     backgroundColor: 'transparent',
+    paddingRight: 20,
   },
 
   contentContainer: {
