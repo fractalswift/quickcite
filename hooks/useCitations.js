@@ -18,7 +18,9 @@ const useCitations = () => {
       const updatedCollections = await Object.values(
         citationCollections.toJSON()
       );
-      setCollections(updatedCollections);
+      setCollections(citationCollections);
+      console.log('as Json:', updatedCollections);
+      console.log('as original:', citationCollections);
     }
   };
 
@@ -44,22 +46,18 @@ const useCitations = () => {
     }
   };
 
-  const saveCitation = async (newCitation, collectionTitle, userId) => {
+  const saveCitation = async (newCitation, userId, collectionId) => {
     console.log('calling saveCitation from useCitations');
     // TODO first check the citation is not already in the collection is not already used
-    const targetCollection = collections.filter((collection) => {
-      return collection.title === collectionTitle;
-    });
 
     const response = await firebase
       .database()
-      .ref(`users/${userId}/citationCollections/-MByBf9V40nj4CkTV5qf/citations`)
-      .push(newCitation);
+      .ref(`users/${userId}/citationCollections/${collectionId}`)
+      .push(newCitation)
+      .catch(console.log());
 
     // reset collections state
     getCollections(userId);
-
-    console.log(targetCollection);
   };
 
   return {

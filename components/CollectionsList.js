@@ -27,7 +27,7 @@ const dummyCollections = [
 const CollectionsList = ({ navigation }) => {
   const { collections, createCollection, user } = useContext(UserContext);
 
-  // state for making the "new collection" box visible not
+  // state for making the "new collection" box visible or not
   const [create, setCreate] = useState(false);
 
   const [newColName, setNewColName] = useState('');
@@ -42,12 +42,15 @@ const CollectionsList = ({ navigation }) => {
     console.log('created collection');
   };
 
-  useEffect(() => {}, [create, collections, user]);
+  useEffect(() => {
+    console.log('CL useeffect:', Object.entries(collections.toJSON()));
+  }, [create, collections, user]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.articleCount}>
-        You have {collections.length || 0} citation collections.
+        You have {Object.keys(collections.toJSON()).length || 0} citation
+        collections.
       </Text>
       <FloatingButton
         name={!create ? 'Create' : 'Cancel'}
@@ -78,7 +81,7 @@ const CollectionsList = ({ navigation }) => {
         </>
       ) : null}
       <ScrollView style={styles.collectionsList}>
-        {collections.map((collection) => {
+        {Object.values(collections.toJSON()).map((collection) => {
           return (
             <CitationCollection
               title={collection.title}

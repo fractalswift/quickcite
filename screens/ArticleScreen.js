@@ -37,6 +37,7 @@ export default function ArticleScreen({ route, navigation }) {
     getSavedArticles,
     saveCitation,
     collections,
+    getCollections,
     user,
   } = useContext(UserContext);
 
@@ -97,8 +98,9 @@ export default function ArticleScreen({ route, navigation }) {
     setIsSaved(true);
   };
 
-  const addCitationToCollection = async () => {
-    saveCitation('citation', 'Trees', user.uid);
+  const addCitationToCollection = async (citation, userId, collectionId) => {
+    // saveCitation('citation', 'Trees', user.uid);
+    saveCitation(citation, userId, collectionId);
   };
 
   useEffect(() => {
@@ -127,14 +129,22 @@ export default function ArticleScreen({ route, navigation }) {
             </Text>
 
             <View>
-              {collections.map((collection) => {
+              {Object.entries(collections.toJSON()).map((collection) => {
+                const citation = { title, doi };
                 return (
                   <TouchableOpacity
                     style={styles.collection}
-                    onPress={() => addCitationToCollection()}
+                    onPress={() => {
+                      addCitationToCollection(
+                        citation,
+                        user.uid,
+                        collection[0]
+                      );
+                      setModalVisible(!modalVisible);
+                    }}
                   >
                     <Text style={{ fontWeight: 'bold' }}>
-                      {collection.title}
+                      {collection[1].title}
                     </Text>
                     <Text style={{ fontWeight: 'bold' }}>+</Text>
                   </TouchableOpacity>
