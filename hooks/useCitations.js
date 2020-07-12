@@ -27,9 +27,11 @@ const useCitations = () => {
   const createCollection = async (newCollection, userId) => {
     console.log('calling createCol from useCitations');
     // first check the collectionTitle is not already used
-    const matchedCollections = collections.filter((collection) => {
-      return collection.title === newCollection.title;
-    });
+    const matchedCollections = Object.values(collections).filter(
+      (collection) => {
+        return collection.title === newCollection.title;
+      }
+    );
 
     if (!matchedCollections.length) {
       const response = await firebase
@@ -60,11 +62,24 @@ const useCitations = () => {
     getCollections(userId);
   };
 
+  const deleteCollection = async (userId, collectionId) => {
+    console.log('called delete collection');
+    const response = await firebase
+      .database()
+      .ref(`users/${userId}/citationCollections/${collectionId}`)
+      .remove()
+      .catch(console.log());
+
+    // reset collections state
+    getCollections(userId);
+  };
+
   return {
     getCollections,
     createCollection,
     saveCitation,
     collections,
+    deleteCollection,
   };
 };
 

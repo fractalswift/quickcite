@@ -2,8 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FloatingButton } from './common';
 import Colors from '../constants/Colors';
+import CollectionsList from './CollectionsList';
 
-const CitationCollection = ({ title, doi, navigation }) => {
+const CitationCollection = ({ title, count, navigation, deleteCollection }) => {
   return (
     <TouchableOpacity
       style={styles.box}
@@ -17,6 +18,7 @@ const CitationCollection = ({ title, doi, navigation }) => {
         <Text style={{ fontWeight: 'bold', fontSize: 18 }} t>
           {title.slice(0, 170)}...
         </Text>
+        <Text>{count} citations in this collection</Text>
       </View>
       <View style={styles.buttons}>
         <FloatingButton
@@ -28,6 +30,7 @@ const CitationCollection = ({ title, doi, navigation }) => {
           name='delete'
           icon='md-remove-circle-outline'
           color='crimson'
+          onPress={deleteCollection}
         />
       </View>
     </TouchableOpacity>

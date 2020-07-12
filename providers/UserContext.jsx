@@ -28,6 +28,7 @@ const UserProvider = (props) => {
     getCollections,
     createCollection,
     saveCitation,
+    deleteCollection,
   } = useCitations();
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const UserProvider = (props) => {
         collections,
         createCollection,
         getCollections,
+        deleteCollection,
         saveCitation,
       }}
     >

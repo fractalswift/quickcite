@@ -25,7 +25,9 @@ const dummyCollections = [
 ];
 
 const CollectionsList = ({ navigation }) => {
-  const { collections, createCollection, user } = useContext(UserContext);
+  const { collections, createCollection, deleteCollection, user } = useContext(
+    UserContext
+  );
 
   // state for making the "new collection" box visible or not
   const [create, setCreate] = useState(false);
@@ -81,14 +83,20 @@ const CollectionsList = ({ navigation }) => {
         </>
       ) : null}
       <ScrollView style={styles.collectionsList}>
-        {Object.values(collections.toJSON()).map((collection) => {
+        {Object.entries(collections.toJSON()).map((collection) => {
           return (
             <CitationCollection
-              title={collection.title}
-              uid={collection.uid}
-              doi={collection.doi}
-              key={collection.uid}
+              title={collection[1].title}
+              key={collection[1].title}
               navigation={navigation}
+              deleteCollection={() => {
+                deleteCollection(user.uid, collection[0]);
+              }}
+              count={
+                collection[1].citations
+                  ? Object.values(collection[1].citations).length
+                  : 0
+              }
             />
           );
         })}
