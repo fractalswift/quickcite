@@ -1,17 +1,44 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Share } from 'react-native';
 import { FloatingButton } from './common';
 import Colors from '../constants/Colors';
 
-const SavedItem = ({
+const Citation = ({
   articleTitle,
   authors,
   pubDate,
+  pubName,
   doi,
   deleteCitation,
+  collectionId,
+  citationId,
   user,
 }) => {
-  console.log(authors);
+  // turn authors into a string ready for export
+  const authorsForCite = Object.values(authors).reduce((acc, curr) => {
+    return acc + curr.creator + ' ';
+  }, '');
+
+  const citationToExport = `${authorsForCite} (${pubDate}). ${articleTitle}. ${pubName}. Doi: ${doi}`;
+
+  const exportCitation = async () => {
+    try {
+      const result = await Share.share({
+        message: citationToExport,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <View style={styles.box}>
@@ -29,13 +56,14 @@ const SavedItem = ({
           color={Colors.tintColor}
           name='export'
           icon='md-arrow-round-forward'
+          onPress={exportCitation}
         />
         <FloatingButton
           name='delete'
           icon='md-remove-circle-outline'
           color='crimson'
           onPress={() => {
-            unsaveArticle(user.uid, doi);
+            deleteCitation(user.uid, collectionId, citationId);
           }}
         />
       </View>
@@ -67,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SavedItem;
+export default Citation;

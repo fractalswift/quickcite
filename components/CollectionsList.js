@@ -16,9 +16,13 @@ import FormInput from '../components/FormInput';
 import { UserContext } from '../providers/UserContext';
 
 const CollectionsList = ({ navigation }) => {
-  const { collections, createCollection, deleteCollection, user } = useContext(
-    UserContext
-  );
+  const {
+    collections,
+    createCollection,
+    deleteCollection,
+    user,
+    deleteCitation,
+  } = useContext(UserContext);
 
   // state for making the "new collection" box visible or not
   const [create, setCreate] = useState(false);
@@ -35,10 +39,7 @@ const CollectionsList = ({ navigation }) => {
     console.log('created collection');
   };
 
-  useEffect(() => {
-    console.log('COLL:', collections);
-    console.log(collections.length ? 'truthy' : 'falsy');
-  }, [create, collections, user]);
+  useEffect(() => {}, [create, collections, user]);
 
   if (!Object.keys(collections).length) {
     return (
@@ -120,6 +121,9 @@ const CollectionsList = ({ navigation }) => {
                   navigation.navigate('Collection', {
                     title: collection[1].title,
                     citations: collection[1].citations,
+                    deleteCitation: deleteCitation,
+                    collectionId: collection[0],
+                    user: user,
                   })
                 }
               >

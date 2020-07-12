@@ -8,6 +8,7 @@ import {
   Modal,
   TouchableHighlight,
   TouchableOpacity,
+  Share,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
@@ -78,8 +79,6 @@ export default function ArticleScreen({ route, navigation }) {
     }
   };
 
-  // This adds saved article to user profile
-
   // TODO move setIsSaved to be based in useEffect so we know article IS saved
   const addArticleToUserDb = async () => {
     const record = {
@@ -101,6 +100,25 @@ export default function ArticleScreen({ route, navigation }) {
   const addCitationToCollection = async (citation, userId, collectionId) => {
     // saveCitation('citation', 'Trees', user.uid);
     saveCitation(citation, userId, collectionId);
+  };
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Check out this article I found with QuickCite: ${url}`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   useEffect(() => {
@@ -176,7 +194,7 @@ export default function ArticleScreen({ route, navigation }) {
           />
         ) : (
           <FloatingButton
-            color='skyblue'
+            color={Colors.tintColor}
             name='save'
             icon='md-save'
             onPress={() => addArticleToUserDb()}
@@ -196,6 +214,12 @@ export default function ArticleScreen({ route, navigation }) {
           name='web'
           icon='md-globe'
           onPress={() => Linking.openURL(url)}
+        />
+        <FloatingButton
+          color='springgreen'
+          name='share'
+          icon='md-share'
+          onPress={onShare}
         />
       </View>
 

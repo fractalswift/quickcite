@@ -16,7 +16,6 @@ const LoginForm = () => {
 
   // Clean up to avoid memory leak from loading state
   useEffect(() => {
-    console.log('useEffect LoginForm');
     return setLoading(false);
   }, [loading]);
 

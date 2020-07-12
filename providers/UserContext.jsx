@@ -30,6 +30,7 @@ const UserProvider = (props) => {
     saveCitation,
     deleteCollection,
     trigger,
+    deleteCitation,
   } = useCitations();
 
   useEffect(() => {
@@ -57,6 +58,7 @@ const UserProvider = (props) => {
         getCollections,
         deleteCollection,
         saveCitation,
+        deleteCitation,
       }}
     >
       {props.children}

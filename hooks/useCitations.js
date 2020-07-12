@@ -22,8 +22,6 @@ const useCitations = () => {
         citationCollections.toJSON()
       );
       setCollections(citationCollections);
-      console.log('as Json:', updatedCollections);
-      console.log('as original:', citationCollections);
     }
   };
 
@@ -80,12 +78,27 @@ const useCitations = () => {
     getCollections(userId);
   };
 
+  const deleteCitation = async (userId, collectionId, citationId) => {
+    console.log('called delete citation');
+    const response = await firebase
+      .database()
+      .ref(
+        `users/${userId}/citationCollections/${collectionId}/citations/${citationId}`
+      )
+      .remove()
+      .catch(console.log());
+
+    // reset collections state
+    getCollections(userId);
+  };
+
   return {
     getCollections,
     createCollection,
     saveCitation,
     collections,
     deleteCollection,
+    deleteCitation,
   };
 };
 

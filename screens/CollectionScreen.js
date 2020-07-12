@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Share } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { BigButton } from '../components/common';
 import Colors from '../constants/Colors';
@@ -9,34 +9,84 @@ import Citation from '../components/Citation';
 export default function CollectionScreen({ route, navigation }) {
   const title = route.params.title;
   const citations = route.params.citations;
+  const deleteCitation = route.params.deleteCitation;
+  const collectionId = route.params.collectionId;
+  const user = route.params.user;
 
-  useEffect(() => {
-    console.log(route.params);
-  });
+  if (citations) {
+    // get all the citations into an array
+    const allCitationsToExport = Object.values(citations).map((citation) => {
+      const authors = Object.values(citation.authors).reduce((acc, curr) => {
+        return acc + curr.creator + ' ';
+      }, '');
+
+      return `${authors} (${citation.pubDate}). ${citation.title}. ${citation.pubName}. Doi: ${citation.doi}`;
+    });
+
+    // turn all the citations into a string
+    const stringToExport = allCitationsToExport.reduce((acc, curr) => {
+      return acc + `\n\n` + curr;
+    });
+  }
+
+  const exportAllCitations = async () => {
+    try {
+      const result = await Share.share({
+        message: stringToExport,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  useEffect(() => {}, [citations]);
 
   return (
     <View style={styles.container}>
       <Header />
-      <View style={styles.topButtons}>
-        <BigButton
-          color={Colors.tintColor}
-          label='export all'
-          icon='md-arrow-round-forward'
-        />
-      </View>
 
-      <ScrollView>
-        {Object.values(citations).map((citation) => {
-          return (
-            <Citation
-              articleTitle={citation.title}
-              pubDate={citation.pubDate}
-              doi={citation.doi}
-              authors={citation.authors}
+      {!citations ? (
+        <Text style={{ textAlign: 'center' }}>
+          You have not added any citations to this collection.
+        </Text>
+      ) : (
+        <>
+          <View style={styles.topButtons}>
+            <BigButton
+              color={Colors.tintColor}
+              label='export all'
+              icon='md-arrow-round-forward'
+              onPress={exportAllCitations}
             />
-          );
-        })}
-      </ScrollView>
+          </View>
+          <ScrollView>
+            {Object.entries(citations).map((citation) => {
+              return (
+                <Citation
+                  articleTitle={citation[1].title}
+                  pubDate={citation[1].pubDate}
+                  pubName={citation[1].pubName}
+                  doi={citation[1].doi}
+                  authors={citation[1].authors}
+                  deleteCitation={deleteCitation}
+                  collectionId={collectionId}
+                  citationId={citation[0]}
+                  user={user}
+                />
+              );
+            })}
+          </ScrollView>
+        </>
+      )}
     </View>
   );
 }
