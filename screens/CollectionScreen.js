@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, FlatList, Share } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { BigButton } from '../components/common';
@@ -13,7 +13,9 @@ export default function CollectionScreen({ route, navigation }) {
   const collectionId = route.params.collectionId;
   const user = route.params.user;
 
-  if (citations) {
+  const [stringForExport, setStringForExport] = useState('');
+
+  useEffect(() => {
     // get all the citations into an array
     const allCitationsToExport = Object.values(citations).map((citation) => {
       const authors = Object.values(citation.authors).reduce((acc, curr) => {
@@ -27,9 +29,11 @@ export default function CollectionScreen({ route, navigation }) {
     const stringToExport = allCitationsToExport.reduce((acc, curr) => {
       return acc + `\n\n` + curr;
     });
-  }
 
-  const exportAllCitations = async () => {
+    setStringForExport(stringToExport);
+  }, [citations]);
+
+  const exportAllCitations = async (stringToExport) => {
     try {
       const result = await Share.share({
         message: stringToExport,
@@ -65,7 +69,7 @@ export default function CollectionScreen({ route, navigation }) {
               color={Colors.tintColor}
               label='export all'
               icon='md-arrow-round-forward'
-              onPress={exportAllCitations}
+              onPress={() => exportAllCitations(stringForExport)}
             />
           </View>
           <ScrollView>

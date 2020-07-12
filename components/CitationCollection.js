@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Share } from 'react-native';
 import { FloatingButton } from './common';
 import Colors from '../constants/Colors';
 
@@ -11,6 +11,47 @@ const CitationCollection = ({
   user,
   collection,
 }) => {
+  const [stringForExport, setStringForExport] = useState('');
+
+  useEffect(() => {
+    // get all the citations into an array
+    const allCitationsToExport = Object.values(collection[1].citations).map(
+      (citation) => {
+        const authors = Object.values(citation.authors).reduce((acc, curr) => {
+          return acc + curr.creator + ' ';
+        }, '');
+
+        return `${authors} (${citation.pubDate}). ${citation.title}. ${citation.pubName}. Doi: ${citation.doi}`;
+      }
+    );
+
+    // turn all the citations into a string
+    const stringToExport = allCitationsToExport.reduce((acc, curr) => {
+      return acc + `\n\n` + curr;
+    });
+
+    setStringForExport(stringToExport);
+  }, [collection]);
+
+  const exportAllCitations = async (stringToExport) => {
+    try {
+      const result = await Share.share({
+        message: stringToExport,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   useEffect(() => {}, [count, collection]);
 
   return (
@@ -26,6 +67,9 @@ const CitationCollection = ({
           name='export'
           icon='md-arrow-round-forward'
           color={Colors.tintColor}
+          onPress={() => {
+            exportAllCitations(stringForExport);
+          }}
         />
         <FloatingButton
           name='delete'
