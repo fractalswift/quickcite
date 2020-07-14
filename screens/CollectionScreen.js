@@ -34,7 +34,7 @@ export default function CollectionScreen({ route, navigation }) {
 
       setStringForExport(stringToExport);
     }
-  }, [citations, needRefresh]);
+  }, [citations]);
 
   const exportAllCitations = async (stringToExport) => {
     try {
