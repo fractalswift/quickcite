@@ -7,18 +7,18 @@ import Colors from '../constants/Colors';
 
 import { BigButton } from '../components/common';
 
-import useAuth from '../hooks/useAuth';
 import NotLoggedIn from '../components/NotLoggedIn';
 
 import { UserContext } from '../providers/UserContext';
 
-export default function AccountScreen() {
-  const { isSignedIn, signOut } = useContext(UserContext);
+import { Alert } from '../components/common';
 
-  const { getUserStatus } = useAuth();
+export default function AccountScreen() {
+  const { isSignedIn, signOut, user, resetPassword } = useContext(UserContext);
 
   useEffect(() => {
     console.log('useEffect in Account Screen called, isSignedIn =', isSignedIn);
+    console.log('USER', user.email);
   });
 
   if (isSignedIn) {
@@ -35,22 +35,15 @@ export default function AccountScreen() {
               onPress={signOut}
               color={Colors.tintColor}
             />
+
             <BigButton
-              label='Dark mode'
-              icon='md-moon'
-              color={Colors.tintColor}
-            />
-            <BigButton label='Sync' icon='md-sync' color={Colors.tintColor} />
-            <BigButton
-              label='Security'
+              label='Reset password'
               icon='md-key'
               color={Colors.tintColor}
-              onPress={getUserStatus}
-            />
-            <BigButton
-              label='Text size'
-              icon='md-resize'
-              color={Colors.tintColor}
+              onPress={() => {
+                resetPassword(user.email);
+                alert('Please check your email for the reset link.');
+              }}
             />
           </View>
         </ScrollView>

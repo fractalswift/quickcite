@@ -14,6 +14,7 @@ const UserProvider = (props) => {
     user,
     signOut,
     signIn,
+    resetPassword,
   } = useAuth();
 
   const {
@@ -59,6 +60,7 @@ const UserProvider = (props) => {
         deleteCollection,
         saveCitation,
         deleteCitation,
+        resetPassword,
       }}
     >
       {props.children}

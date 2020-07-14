@@ -15,22 +15,27 @@ const CitationCollection = ({
 
   useEffect(() => {
     // get all the citations into an array
-    const allCitationsToExport = Object.values(collection[1].citations).map(
-      (citation) => {
-        const authors = Object.values(citation.authors).reduce((acc, curr) => {
-          return acc + curr.creator + ' ';
-        }, '');
+    if (collection[1].length) {
+      const allCitationsToExport = Object.values(collection[1].citations).map(
+        (citation) => {
+          const authors = Object.values(citation.authors).reduce(
+            (acc, curr) => {
+              return acc + curr.creator + ' ';
+            },
+            ''
+          );
 
-        return `${authors} (${citation.pubDate}). ${citation.title}. ${citation.pubName}. Doi: ${citation.doi}`;
-      }
-    );
+          return `${authors} (${citation.pubDate}). ${citation.title}. ${citation.pubName}. Doi: ${citation.doi}`;
+        }
+      );
 
-    // turn all the citations into a string
-    const stringToExport = allCitationsToExport.reduce((acc, curr) => {
-      return acc + `\n\n` + curr;
-    });
+      // turn all the citations into a string
+      const stringToExport = allCitationsToExport.reduce((acc, curr) => {
+        return acc + `\n\n` + curr;
+      });
 
-    setStringForExport(stringToExport);
+      setStringForExport(stringToExport);
+    }
   }, [collection]);
 
   const exportAllCitations = async (stringToExport) => {

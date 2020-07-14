@@ -72,6 +72,17 @@ const useAuth = () => {
     }
   };
 
+  const resetPassword = async (userEmail) => {
+    console.log('sending reset email');
+
+    try {
+      const response = await auth.sendPasswordResetEmail(userEmail);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     getUserStatus,
     getUser,
@@ -79,6 +90,7 @@ const useAuth = () => {
     user,
     signIn,
     signOut,
+    resetPassword,
   };
 };
 
