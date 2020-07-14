@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Share } from 'react-native';
 import { FloatingButton } from './common';
 import Colors from '../constants/Colors';
@@ -64,6 +64,7 @@ const Citation = ({
           color='crimson'
           onPress={() => {
             deleteCitation(user.uid, collectionId, citationId);
+            setNeedRefresh(!needRefresh);
           }}
         />
       </View>

@@ -16,6 +16,7 @@ export default function CollectionScreen({ route, navigation }) {
   const [stringForExport, setStringForExport] = useState('');
 
   useEffect(() => {
+    console.log('calling useEf from collection screen');
     if (citations) {
       // get all the citations into an array
       const allCitationsToExport = Object.values(citations).map((citation) => {
@@ -33,7 +34,7 @@ export default function CollectionScreen({ route, navigation }) {
 
       setStringForExport(stringToExport);
     }
-  }, [citations]);
+  }, [citations, needRefresh]);
 
   const exportAllCitations = async (stringToExport) => {
     try {
@@ -53,8 +54,6 @@ export default function CollectionScreen({ route, navigation }) {
       alert(error.message);
     }
   };
-
-  useEffect(() => {}, [citations]);
 
   return (
     <View style={styles.container}>
@@ -87,6 +86,7 @@ export default function CollectionScreen({ route, navigation }) {
                   collectionId={collectionId}
                   citationId={citation[0]}
                   user={user}
+                  key={citation[1].doi}
                 />
               );
             })}
