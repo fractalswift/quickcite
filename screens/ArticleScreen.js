@@ -147,27 +147,29 @@ export default function ArticleScreen({ route, navigation }) {
             </Text>
 
             <View>
-              {Object.entries(collections.toJSON()).map((collection) => {
-                const citation = { authors, pubDate, title, pubName, doi };
-                return (
-                  <TouchableOpacity
-                    style={styles.collection}
-                    onPress={() => {
-                      addCitationToCollection(
-                        citation,
-                        user.uid,
-                        collection[0]
-                      );
-                      setModalVisible(!modalVisible);
-                    }}
-                  >
-                    <Text style={{ fontWeight: 'bold' }}>
-                      {collection[1].title}
-                    </Text>
-                    <Text style={{ fontWeight: 'bold' }}>+</Text>
-                  </TouchableOpacity>
-                );
-              })}
+              {collections.toJSON
+                ? Object.entries(collections.toJSON()).map((collection) => {
+                    const citation = { authors, pubDate, title, pubName, doi };
+                    return (
+                      <TouchableOpacity
+                        style={styles.collection}
+                        onPress={() => {
+                          addCitationToCollection(
+                            citation,
+                            user.uid,
+                            collection[0]
+                          );
+                          setModalVisible(!modalVisible);
+                        }}
+                      >
+                        <Text style={{ fontWeight: 'bold' }}>
+                          {collection[1].title}
+                        </Text>
+                        <Text style={{ fontWeight: 'bold' }}>+</Text>
+                      </TouchableOpacity>
+                    );
+                  })
+                : null}
             </View>
 
             <TouchableHighlight
