@@ -16,21 +16,23 @@ export default function CollectionScreen({ route, navigation }) {
   const [stringForExport, setStringForExport] = useState('');
 
   useEffect(() => {
-    // get all the citations into an array
-    const allCitationsToExport = Object.values(citations).map((citation) => {
-      const authors = Object.values(citation.authors).reduce((acc, curr) => {
-        return acc + curr.creator + ' ';
-      }, '');
+    if (citations) {
+      // get all the citations into an array
+      const allCitationsToExport = Object.values(citations).map((citation) => {
+        const authors = Object.values(citation.authors).reduce((acc, curr) => {
+          return acc + curr.creator + ' ';
+        }, '');
 
-      return `${authors} (${citation.pubDate}). ${citation.title}. ${citation.pubName}. Doi: ${citation.doi}`;
-    });
+        return `${authors} (${citation.pubDate}). ${citation.title}. ${citation.pubName}. Doi: ${citation.doi}`;
+      });
 
-    // turn all the citations into a string
-    const stringToExport = allCitationsToExport.reduce((acc, curr) => {
-      return acc + `\n\n` + curr;
-    });
+      // turn all the citations into a string
+      const stringToExport = allCitationsToExport.reduce((acc, curr) => {
+        return acc + `\n\n` + curr;
+      });
 
-    setStringForExport(stringToExport);
+      setStringForExport(stringToExport);
+    }
   }, [citations]);
 
   const exportAllCitations = async (stringToExport) => {
